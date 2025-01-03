@@ -1,1 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*========================== GLOBAL STYLES ============================*/
+:root{
+    --primary-color: #007bff;       
+    --secondary-color: #1D1E22;   
+    --background-color: #262A2F;
+    --main-color: #32383E; 
+    --text-color: #fff;       
+    --accent-color: #ff5722;       
+    --link-color: #007bff;         
+    --error-color: #dc3545;       
+    --success-color: #28a745;    
+    --hover-color: #0056b3;
+
+    --form-width: 40%;
+    --lg-screen: 1400px;
+
+    --transition: all 300ms ease;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    list-style: none;
+    text-decoration: none;
+}
+
+body{
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text-color);
+}
+
+.container{
+    max-width: 1800px;
+    width: var(--lg-screen);
+    margin-inline: auto;
+}
+
+h1{
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+p{
+    color: var(--text-color);
+}
+
+button{
+    padding: .5rem;
+    border-radius: 3px;
+    background: var(--primary-color);
+    color: var(--text-color);
+    cursor: pointer;
+}
