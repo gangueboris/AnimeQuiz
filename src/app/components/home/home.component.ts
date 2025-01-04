@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-home',
   imports: [NgOptimizedImage],
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
         <div class="nav__container container">
             <a href=""><h1>AnimeQuiz</h1></a>
             <div class="profile__container">
-              <img ngSrc="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="profile" width="45" height="45" (click)="goToProfile()">
+               <p>Welcome AnimeQuizer <span> {{userXP }} XP</span></p>
             </div>
         </div>
     </nav>
@@ -18,17 +18,25 @@ import { Router } from '@angular/router';
 <!-- ======================== HOME =============================-->
     <section>
       <div class="home__container container">
-           <div class="home__content">
-              <div class="home__content-img">
-                  <img ngSrc="/src/assets/img.jpg" alt="Ready Quiz" width="45" height="45">
+        <div class="card__container">
+          <div class="card__header">
+              <img ngSrc="assets/readyQuiz.svg" alt="quiz image" height="200" width="260">
+              <button class="card__options-btn"><i class="fa-solid fa-ellipsis"></i></button>
+            </div>
+            <div class="card__content">
+              <p>{{ nbQuestions}} question(s)</p>
+              <div class="card__content-footer">
+                <i class="fa-solid fa-bullseye"></i>
+                <p>Success rate: {{ successRate }}% </p>
+                <button class="play-btn" (click)="goToQuiz()"><i class="fa-solid fa-play"></i></button>
               </div>
-              <button type="button" (click)="goToQuiz()">Ready Quiz !</button>
-           </div>
+          </div>
+        </div>
       </div>
     </section>
 
  <!-- ======================== FOOTER =============================-->
- <footer>
+   <footer>
           <div class="footer__container container">
                 <div class="footer__header">
                   <a href=""><h1>AnimeQuiz</h1></a>
@@ -47,6 +55,11 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
   constructor(private router: Router){}
+  // XP for user profile
+  userXP = 0;
+  nbQuestions = 0;
+  successRate = 0;
+
 
   // Redirection Functions
   goToQuiz() {

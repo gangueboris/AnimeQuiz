@@ -12,6 +12,7 @@
     --error-color: #dc3545;       
     --success-color: #28a745;    
     --hover-color: #0056b3;
+    --blue-light-color: #DBEAFE;
 
     --form-width: 40%;
     --lg-screen: 1400px;
@@ -31,7 +32,6 @@
 
 body{
     font-family: 'Courier New', Courier, monospace;
-    color: var(--text-color);
 }
 
 .container{
@@ -47,6 +47,7 @@ h1{
 
 p{
     color: var(--text-color);
+    font-size: 1.2rem;
 }
 
 button{
@@ -56,3 +57,4 @@ button{
     color: var(--text-color);
     cursor: pointer;
 }
+

@@ -5,14 +5,13 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   imports: [RouterOutlet],
   template: `
-
-
 <!-- ======================== HOMECOMPONENT =============================-->
 <router-outlet />
 
   `,
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
  
 }
