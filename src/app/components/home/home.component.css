@@ -29,7 +29,6 @@ h1{
 /*======================- HOME -==========================*/
 section{
     width: 100%;
-    padding-top: 6rem;
     background: var(--main-color);
     height: 90vh;
 }
@@ -66,8 +65,8 @@ section{
 .card__options-btn{
     position: absolute;
     background: transparent;
-    right: 1rem;
-    top: .5rem;
+    right: -2.5rem;
+    top: -.5rem;
 }
 
 .card__options-btn i {
@@ -94,7 +93,6 @@ i{
     color: var(--text-color);
 }
 
-
 .play-btn{
     border-radius: 50%;
     height: 40px;
@@ -102,17 +100,47 @@ i{
     background: var(--primary-color);
 }
 
-
-/*button{
-    width: 100%;
-    font-size: 1.2rem;
-    margin-top: 1rem;
+.card__options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: var(--text-color);
+    width: fit-content;
+    padding: 1.3rem;
+    border-radius: 1rem;
+    gap: 1rem;
+    position: absolute;
+    right: -14rem;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none; /* Prevent interaction when hidden */
 }
 
-button a{
-    color: var(--text-color);
-}*/
 
+  .card__options.visible {
+    opacity: 1;
+    transform: scale(1); 
+    pointer-events: auto; /* Enable interaction when visible */
+  }
+  
+  
+
+button{
+    background: var(--primary-color);
+    border-radius: .5rem;
+    width: 9rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .7rem;
+}
+
+button i{
+    font-size: 1.2rem;
+}
 /*======================- FOOTER -==========================*/
 
 footer{

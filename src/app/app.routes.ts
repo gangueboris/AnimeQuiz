@@ -18,5 +18,6 @@ export const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         title: "Profile Page"
-    }
+    },
+
 ];

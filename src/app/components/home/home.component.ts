@@ -21,16 +21,21 @@ import { Router, RouterOutlet } from '@angular/router';
         <div class="card__container">
           <div class="card__header">
               <img ngSrc="assets/readyQuiz.svg" alt="quiz image" height="200" width="260">
-              <button class="card__options-btn"><i class="fa-solid fa-ellipsis"></i></button>
+              <button class="card__options-btn" (click)="toggleOptions()"><i class="fa-solid fa-ellipsis"></i></button>
+              <div class="card__options" [class.visible]="optionsVisible">
+                  <button class="add" (click)="addQuestion()"><i class="fa-solid fa-plus"></i></button>
+                  <button class="edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <!--<button class="delete"><i class="fa-solid fa-trash-can"></i></button>-->
+              </div>  
             </div>
             <div class="card__content">
-              <p>{{ nbQuestions}} question(s)</p>
-              <div class="card__content-footer">
-                <i class="fa-solid fa-bullseye"></i>
-                <p>Success rate: {{ successRate }}% </p>
-                <button class="play-btn" (click)="goToQuiz()"><i class="fa-solid fa-play"></i></button>
-              </div>
-          </div>
+                <p>{{ nbQuestions}} question(s)</p>
+                <div class="card__content-footer">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <p>Success rate: {{ successRate }}% </p>
+                    <button class="play-btn" (click)="goToQuiz()"><i class="fa-solid fa-play"></i></button>
+                </div>
+            </div>
         </div>
       </div>
     </section>
@@ -59,14 +64,23 @@ export class HomeComponent {
   userXP = 0;
   nbQuestions = 0;
   successRate = 0;
+  optionsVisible = false;
 
 
   // Redirection Functions
-  goToQuiz() {
+  goToQuiz():void {
     this.router.navigate(['/quiz']);
   }
-  goToProfile() {
+  goToProfile():void {
     this.router.navigate(['/profile']);
+  }
+
+  addQuestion():void {
+     this.router.navigate(['/add-question']);
+  }
+  toggleOptions():void {
+    this.optionsVisible = !this.optionsVisible;
+  
   }
 
   // Array of {linkToRef, name} // Put it into a service: For Footer
