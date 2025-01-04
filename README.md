@@ -11,49 +11,33 @@ ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+# Anime Quiz Application
 
-## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Project Overview
+This project is designed to help you learn and master Angular by building a feature-rich anime quiz application. It demonstrates key Angular concepts such as working with components, services, routing, and HTTP requests.
 
-```bash
-ng generate component component-name
-```
+## Objectives
+- Load anime quiz questions dynamically from a local JSON-based API.
+- Implement interactive quiz features, including timers and experience points (XP) tracking.
+- Utilize Angular's HTTP client to interact with the local API for managing quiz questions.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Key Features
 
-```bash
-ng generate --help
-```
+### Anime Quiz Gameplay
+- Play an engaging anime quiz.
+- Include a countdown timer for each question.
+- Award XP based on the player’s performance.
 
-## Building
+### CRUD Functionality for Quiz Questions
+- **Create**: Add new questions to the quiz via a form.
+- **Read**: Load and display questions dynamically from the local API.
+- **Update**: Edit existing quiz questions.
+- **Delete**: Remove questions as needed.
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Angular Concepts Covered
+- Component-based architecture.
+- Routing for navigation between pages (e.g., quiz, admin panel).
+- Forms for input validation and user interactions.
+- Dependency injection and services for handling API requests.
+- Observables and async operations for managing data flow.
