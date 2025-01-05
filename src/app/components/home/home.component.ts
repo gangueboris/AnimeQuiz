@@ -80,8 +80,8 @@ export class HomeComponent {
   }
   toggleOptions():void {
     this.optionsVisible = !this.optionsVisible;
-  
   }
+  
 
   // Array of {linkToRef, name} // Put it into a service: For Footer
   referenceLinksArray = [

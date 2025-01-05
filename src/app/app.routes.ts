@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { QuizComponent } from './components/quiz/quiz.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { AddQuestionComponent } from './components/add-question/add-question.component';
 
 export const routes: Routes = [
     {
@@ -15,9 +15,9 @@ export const routes: Routes = [
         title: 'Quiz Page'
     },
     {
-        path: 'profile',
-        component: ProfileComponent,
-        title: "Profile Page"
-    },
-
+        path: 'add-question',
+        component: AddQuestionComponent,
+        title: 'Add-question Page'
+    }
+    
 ];
