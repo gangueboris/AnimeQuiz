@@ -29,7 +29,7 @@ h1{
 /*======================- HOME -==========================*/
 section{
     width: 100%;
-    background: var(--main-color);
+    background: var(--background-color);
     height: 90vh;
 }
 
