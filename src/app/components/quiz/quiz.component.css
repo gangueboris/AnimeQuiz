@@ -3,7 +3,7 @@ p{
 }
 
 section {
-    background: var(--background-color);
+    background: var(--secondary-color);
     color: var(--text-color);
     height: 100vh;
     width: 100vw;
@@ -21,13 +21,14 @@ section {
 }
 
 .questions__container {
-    background: #000;
+    
     display: flex;
     justify-content: center;
 }
 .questions__container div{
    
     width: var(--form-width);
+    position: relative;
 }
 *
 .questions__container-header {
@@ -43,5 +44,35 @@ section {
    display: flex;
    justify-content: center;
    align-items: center;
-    background: red;
+    background:  var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-radius: var(--border-raduis-input);
+}
+
+.questions__container-list{
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: var(--form-width);
+}
+
+.question {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    padding: var(--padding-input);
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.next-question{
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    border-radius: var(--border-raduis-input);
 }

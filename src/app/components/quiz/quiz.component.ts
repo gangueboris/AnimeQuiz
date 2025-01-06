@@ -23,9 +23,7 @@ import { Component } from '@angular/core';
               </div>
               <div class="questions__container-list">
                   @for(letter of choicesLetters.slice(0, nbQuestion); track letter) {
-                      <div class="questions__container-content">
-                        <div class="question">{{letter}}. Who is Naruto ?</div>
-                      </div>
+                    <div class="question">{{letter}}. Who is Naruto  ?</div>
                   }
               </div>
               <button class="next-question">Next</button>
