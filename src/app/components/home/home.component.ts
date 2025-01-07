@@ -8,7 +8,7 @@ import { Router, RouterOutlet } from '@angular/router';
   <!-- ======================== NAVBAR =============================-->
     <nav>
         <div class="nav__container container">
-            <a href=""><h1>AnimeQuiz</h1></a>
+            <a href=""><h1 class="logo">AnimeQuiz</h1></a>
             <div class="profile__container">
                <p>Welcome AnimeQuizer <span> {{userXP }} XP</span></p>
             </div>

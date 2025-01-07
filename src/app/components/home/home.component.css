@@ -16,9 +16,6 @@ nav{
     height: 100%;
 }
 
-h1{
-    color: var(--primary-color);
-}
 
 .profile__container span{
     color: var(--primary-color);

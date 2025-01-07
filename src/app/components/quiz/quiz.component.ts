@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
+import { CompleteQuizComponent } from "../complete-quiz/complete-quiz.component";
 
 @Component({
   selector: 'app-quiz',
-  imports: [],
+  imports: [CompleteQuizComponent],
   template: `
     <section>
       <div class="quiz__container container">
         <div class="quiz__header">
           <div>
-            <h2>AnimeQuiz</h2>
+            <a href=""><h1 class="logo">AnimeQuiz</h1></a>
             <p>{{ nbQuestion }} questions</p>
           </div>
-          <div><i class="fa-solid fa-stopwatch"></i> <span>00:02:54</span></div>
+          <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <span>00:02:54</span></div>
         </div>
 
 
@@ -31,6 +32,8 @@ import { Component } from '@angular/core';
         </div>
       </div>    
     </section>
+
+    <app-complete-quiz/>
   `,
   styleUrl: './quiz.component.css'
 })

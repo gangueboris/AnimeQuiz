@@ -18,6 +18,21 @@ section {
     justify-content: space-between;
     align-items: center;
     padding: 2rem 0;
+    margin-bottom: 3rem;
+}
+
+.logo{
+    margin-bottom: 1rem;
+}
+
+
+.quiz-clock {
+    display: flex;
+    gap: .5rem;
+
+}
+.quiz-clock i {
+    color: var(--primary-color);
 }
 
 .questions__container {
@@ -30,7 +45,7 @@ section {
     width: var(--form-width);
     position: relative;
 }
-*
+
 .questions__container-header {
     display: flex;
     align-items: center;
@@ -75,4 +90,5 @@ section {
     align-items: center;
     width: 80px;
     border-radius: var(--border-raduis-input);
+    font-size: 1.1rem;
 }
