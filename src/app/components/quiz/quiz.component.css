@@ -26,17 +26,7 @@ section {
 }
 
 
-.quiz-clock {
-    display: flex;
-    gap: .5rem;
-
-}
-.quiz-clock i {
-    color: var(--primary-color);
-}
-
 .questions__container {
-    
     display: flex;
     justify-content: center;
 }
