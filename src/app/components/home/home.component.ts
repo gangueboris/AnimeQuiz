@@ -24,7 +24,7 @@ import { Router, RouterOutlet } from '@angular/router';
               <button class="card__options-btn" (click)="toggleOptions()"><i class="fa-solid fa-ellipsis"></i></button>
               <div class="card__options" [class.visible]="optionsVisible">
                   <button class="add" (click)="addQuestion()"><i class="fa-solid fa-plus"></i></button>
-                  <button class="edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <button class="edit" (click)="editQuestion()"><i class="fa-regular fa-pen-to-square"></i></button>
                   <!--<button class="delete"><i class="fa-solid fa-trash-can"></i></button>-->
               </div>  
             </div>
@@ -44,7 +44,7 @@ import { Router, RouterOutlet } from '@angular/router';
    <footer>
           <div class="footer__container container">
                 <div class="footer__header">
-                  <a href=""><h1>AnimeQuiz</h1></a>
+                  <a href=""><h1 class="logo">AnimeQuiz</h1></a>
                 </div>
                 <div class="footer__links">
                   <ul>
@@ -78,6 +78,11 @@ export class HomeComponent {
   addQuestion():void {
      this.router.navigate(['/add-question']);
   }
+
+  editQuestion(): void {
+    this.router.navigate(['/edit-question']);
+  }
+
   toggleOptions():void {
     this.optionsVisible = !this.optionsVisible;
   }

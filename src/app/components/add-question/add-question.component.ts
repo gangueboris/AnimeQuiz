@@ -27,7 +27,7 @@ import { Component } from '@angular/core';
             <input type="text" id="correct-answer" placeholder="Add the correct answer..." class="answer-input"/>
           </div>
           <button type="submit" class="form-submit-btn">Save</button>
-        </form>
+    </form>
   </section>
   `,
   styleUrl: './add-question.component.css'

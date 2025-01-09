@@ -1,0 +1,19 @@
+section{
+    width: 100wh;
+    background: var(--background-color);
+  }
+
+.edit-question__container {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    border: 3px solid #000;
+    border-radius: 8px;
+    background: var(--main-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  
+}
