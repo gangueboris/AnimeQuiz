@@ -4,16 +4,31 @@ import { Component } from '@angular/core';
   selector: 'app-edit-question',
   imports: [],
   template: `
-    <section>
+    <section class="edit-questions-section">
+      <div class="quiz__header">
+        <a href="">
+          <h1 class="logo">AnimeQuiz
+          <span><i class="fa-regular fa-pen-to-square"></i></span>
+          </h1>
+
+        </a>
+      </div>
        <div class="edit-question__container container">
           @for(data of dataQuestions; track data) {
             <form class="quiz-container">
               <div class="question-section">
-                <label for="question" class="question-label">Question {{dataQuestions.indexOf(data) + 1}} <i class="fa-solid fa-caret-down"></i> <i class="fa-solid fa-caret-up"></i></label>
+                <label for="question" class="question-label">Question {{dataQuestions.indexOf(data) + 1}}
+                  @if(isVisible) { 
+                    <i class="fa-solid fa-caret-down" (click)="toggleVisibleIcon()"></i>
+                  }@else {
+                    <i class="fa-solid fa-caret-up" (click)="toggleVisibleIcon()"></i>
+                  }
+                </label>
                 <input type="text" id="question" placeholder="Your Question Here..." class="question-input"/>
               </div>
-            
-              <div class="choices-section">
+              
+              @if(isVisible) {
+                <div class="choices-section" >
                 <p class="choices-label">Choices</p>
                 @for(letter of choicesLetters.slice(0, nbQuestion); track letter) {
                   <div class="choice-item">
@@ -28,6 +43,8 @@ import { Component } from '@angular/core';
                 <input type="text" id="correct-answer" placeholder="Add the correct answer..." class="answer-input"/>
               </div>
               <button type="submit" class="form-submit-btn">Save</button>
+
+              }
           </form>
         }  
        </div>
@@ -38,13 +55,17 @@ import { Component } from '@angular/core';
 export class EditQuestionComponent {
   choicesLetters = ['A', 'B', 'C', 'D'];
   nbQuestion = 3;
+  isVisible = true;
 
   addNewQuestion():void {
     this.nbQuestion = this.nbQuestion + 1;
   }
  
   removeChoice(choice: string):void {
+  }
 
+  toggleVisibleIcon():void {
+    this.isVisible = !this.isVisible;
   }
     dataQuestions = [
           {
@@ -107,4 +128,5 @@ export class EditQuestionComponent {
  ToDo NEXT
  - Handle up & down button
  - Hadd header to the edit page 
+ - Find a solution to only show the clicked question(s)
 */

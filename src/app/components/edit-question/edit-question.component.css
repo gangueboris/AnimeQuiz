@@ -1,6 +1,7 @@
-section{
+.edit-questions-section{
     width: 100wh;
     background: var(--background-color);
+    padding: 4rem 0;
   }
 
 .edit-question__container {
@@ -15,5 +16,22 @@ section{
     background: var(--main-color);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    margin-top: 2rem;
   
+}
+
+.edit-questions-header{
+    background: var(--background-color);
+    padding-bottom: 4rem;
+}
+
+
+.quiz__header{
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+span {
+    color: var(--text-color);
 }
