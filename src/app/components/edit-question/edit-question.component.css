@@ -1,3 +1,7 @@
+.quiz-container {
+    position: relative;
+}
+
 .edit-questions-section{
     width: 100wh;
     background: var(--background-color);
@@ -34,4 +38,16 @@
 
 span {
     color: var(--text-color);
+}
+
+.delete-icon {
+    color: var(--error-color);
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    cursor: pointer;
+}
+
+.down-icon:hover, .up-icon:hover {
+    color: var(--primary-color);
 }

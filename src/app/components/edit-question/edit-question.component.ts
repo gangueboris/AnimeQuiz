@@ -10,43 +10,45 @@ import { Component } from '@angular/core';
           <h1 class="logo">AnimeQuiz
           <span><i class="fa-regular fa-pen-to-square"></i></span>
           </h1>
-
         </a>
       </div>
        <div class="edit-question__container container">
-          @for(data of dataQuestions; track data) {
+          @for(data of dataQuestions; track data; let i = $index) {
             <form class="quiz-container">
               <div class="question-section">
-                <label for="question" class="question-label">Question {{dataQuestions.indexOf(data) + 1}}
-                  @if(isVisible) { 
-                    <i class="fa-solid fa-caret-down" (click)="toggleVisibleIcon()"></i>
+                <label for="question" class="question-label">Question {{i + 1}}
+                  @if(dataQuestions[i].isVisible) { 
+                    <i class="fa-solid fa-caret-down down-icon" (click)="toggleVisibleIcon(i)"></i>
                   }@else {
-                    <i class="fa-solid fa-caret-up" (click)="toggleVisibleIcon()"></i>
+                    <i class="fa-solid fa-caret-up up-icon" (click)="toggleVisibleIcon(i)"></i>
                   }
                 </label>
-                <input type="text" id="question" placeholder="Your Question Here..." class="question-input"/>
+                <input type="text" id="question" placeholder="Your Question Here..." class="question-input" [value]="dataQuestions[i].question"/>
               </div>
               
-              @if(isVisible) {
+              @if(dataQuestions[i].isVisible) {
                 <div class="choices-section" >
                 <p class="choices-label">Choices</p>
-                @for(letter of choicesLetters.slice(0, nbQuestion); track letter) {
+                @for(choice of data.incorrect_answers; track choice; let j = $index) {
                   <div class="choice-item">
-                        <span class="choice-label">{{ letter }}:</span>
-                        <input type="text" [placeholder]="'Add Question ' + (choicesLetters.indexOf(letter) + 1)" class="choice-input" />
+                        <span class="choice-label">{{ choicesLetters[j] }}:</span>
+                      <input type="text" [placeholder]="'Add Question ' + (j + 1)" class="choice-input" [value]="choice" />
                   </div>
                 }
-              </div>
+                </div>
 
-              <div class="correct-answer-section">
-                <label for="correct-answer" class="answer-label">Correct Answer</label>
-                <input type="text" id="correct-answer" placeholder="Add the correct answer..." class="answer-input"/>
-              </div>
-              <button type="submit" class="form-submit-btn">Save</button>
-
+                <div class="correct-answer-section">
+                  <label for="correct-answer" class="answer-label">Correct Answer</label>
+                  <input type="text" id="correct-answer" placeholder="Add the correct answer..." class="answer-input" [value]="dataQuestions[i].correct_answer"/>
+                </div>
+                <button type="submit" class="form-submit-btn">Save</button>
               }
-          </form>
-        }  
+              @if(!dataQuestions[i].isVisible) {
+                <i class="fa-solid fa-trash-can delete-icon"></i>
+              }
+              
+            </form>
+          }  
        </div>
     </section>
   `,
@@ -54,18 +56,12 @@ import { Component } from '@angular/core';
 })
 export class EditQuestionComponent {
   choicesLetters = ['A', 'B', 'C', 'D'];
-  nbQuestion = 3;
-  isVisible = true;
 
-  addNewQuestion():void {
-    this.nbQuestion = this.nbQuestion + 1;
-  }
- 
   removeChoice(choice: string):void {
   }
 
-  toggleVisibleIcon():void {
-    this.isVisible = !this.isVisible;
+  toggleVisibleIcon(index: number):void {
+    this.dataQuestions[index].isVisible = !this.dataQuestions[index].isVisible;
   }
     dataQuestions = [
           {
@@ -78,7 +74,8 @@ export class EditQuestionComponent {
               "Croix Meridies",
               "Miranda Holbrook",
               "Anne Finnelan"
-            ]
+            ],
+            "isVisible": false
           },
           {
             "type": "multiple",
@@ -90,7 +87,8 @@ export class EditQuestionComponent {
               "Crimson",
               "Dark Brown",
               "Black"
-            ]
+            ],
+            "isVisible": false
           },
           {
             "type": "multiple",
@@ -102,7 +100,8 @@ export class EditQuestionComponent {
               "Hajime Aoyama",
               "Satsuki Miyanoshita",
               "Mio Itai"
-            ]
+            ],
+            "isVisible": false
           },
           {
             "type": "multiple",
@@ -114,7 +113,8 @@ export class EditQuestionComponent {
               "Red Hot Chili Pepper",
               "Cream Starter",
               "Nut King Call"
-            ]
+            ],
+            "isVisible": false
           }
         ]
   
@@ -126,7 +126,12 @@ export class EditQuestionComponent {
  first disable the save until there is a modification in  the input 
 
  ToDo NEXT
- - Handle up & down button
- - Hadd header to the edit page 
- - Find a solution to only show the clicked question(s)
+ - Handle up & down button (Done)
+ - Hadd header to the edit page (Done)
+ - Find a solution to only show the clicked question(s) (Done)
+ - Implement style and logic of delete pop-pop
+
+ - Bring add-question into home component as a pop-pop
+
+
 */
