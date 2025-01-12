@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-edit-question',
   imports: [],
   template: `
+  <body [class.no-scroll]="isActiveDelQuestSection">
     <section class="edit-questions-section">
       <div class="quiz__header">
         <a href="">
@@ -44,18 +45,36 @@ import { Component } from '@angular/core';
                 <button type="submit" class="form-submit-btn">Save</button>
               }
               @if(!dataQuestions[i].isVisible) {
-                <i class="fa-solid fa-trash-can delete-icon"></i>
+                <i class="fa-solid fa-trash-can delete-icon" (click)="toggleDeleteQuestion(i)"></i>
               }
               
             </form>
           }  
        </div>
     </section>
+        <!--======================================== DELETE QUESTION ===============================================-->
+    <section class="delete-question-section" [class.active]="isActiveDelQuestSection" (click)="onBackgroundClick($event)">
+       <div class="delete-question__container">
+          <h2 class="delete-question-header">Do you want this question ?</h2>
+          <div class="delete-question-message">
+            <p>This will delete question {{delQuestionNumber()}}</p>
+          </div>
+          <div class="delete-questions-btn-container">
+            <button class="cancel-btn btn" (click)="cancelDelete()">Cancel</button>
+            <button class="delete-btn btn">Delete</button>
+          </div>
+       </div>
+    </section>
+  </body>
   `,
   styleUrl: './edit-question.component.css'
 })
 export class EditQuestionComponent {
   choicesLetters = ['A', 'B', 'C', 'D'];
+  delQuestionNumber = signal(1);
+  isActiveDelQuestSection = false;
+ 
+  
 
   removeChoice(choice: string):void {
   }
@@ -63,6 +82,29 @@ export class EditQuestionComponent {
   toggleVisibleIcon(index: number):void {
     this.dataQuestions[index].isVisible = !this.dataQuestions[index].isVisible;
   }
+
+
+  toggleDeleteQuestion(index: number): void {
+    // Update delete question variable
+    this.delQuestionNumber.update((val) => index + 1);
+    this.isActiveDelQuestSection = !this.isActiveDelQuestSection;
+  }
+
+  cancelDelete(): void {
+    this.isActiveDelQuestSection = !this.isActiveDelQuestSection;
+  }
+
+  // Close the pop-up if the background is clicked
+  onBackgroundClick(event: MouseEvent): void {
+    if(event.target == event.currentTarget){
+      this.isActiveDelQuestSection = !this.isActiveDelQuestSection;
+    }
+  }
+
+
+
+
+
     dataQuestions = [
           {
             "type": "multiple",
@@ -129,9 +171,10 @@ export class EditQuestionComponent {
  - Handle up & down button (Done)
  - Hadd header to the edit page (Done)
  - Find a solution to only show the clicked question(s) (Done)
- - Implement style and logic of delete pop-pop
+ - Implement style and logic of delete pop-up (Done)
+ - Bring add-question into home component as a pop-up (Done)
 
- - Bring add-question into home component as a pop-pop
-
+ - Form Validation, for saving
+ - Delete logic
 
 */
