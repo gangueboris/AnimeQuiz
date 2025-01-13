@@ -24,7 +24,9 @@ import { AddQuestionComponent } from "../add-question/add-question.component";
       <div class="home__container container">
         <div class="card__container">
           <div class="card__header">
-              <img ngSrc="assets/readyQuiz.svg" alt="quiz image" height="200" width="260" priority="">
+            <div class="card__header-img">
+               <img ngSrc="assets/readyQuiz.svg" alt="quiz image"  height="200" width="260" priority>
+            </div>
               <button class="card__options-btn" (click)="toggleOptions()"><i class="fa-solid fa-ellipsis"></i></button>
               <div class="card__options" [class.visible]="optionsVisible" (click)="onBackgroundClick($event)">
                   <button class="add" (click)="addQuestion()"><i class="fa-solid fa-plus"></i></button>
@@ -117,8 +119,3 @@ export class HomeComponent {
 
 }
 
-/*
- - To solve the issue of the addQuestion(), I have to understand the live cycle of
- angular...
- - Would like to have when click on background of the options__container, it will close
-*/

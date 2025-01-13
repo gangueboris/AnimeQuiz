@@ -1,0 +1,14 @@
+================================= ISSUES =====================================
+                  ============ HOME COMPONENT =============
+- Issue: When I have to click twice to show the add-question-form instead of once.
+
+
+
+
+================================= REFLEXION =====================================
+- For nexts projects, start by the back-end, design the api, create the dataBase
+- When comes in the UI, test the api before starting coding the UI.
+
+
+================================= TODO =====================================
+- Work on edit quiz, make it functionnal

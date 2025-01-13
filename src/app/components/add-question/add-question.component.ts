@@ -1,61 +1,122 @@
 import { Component, Input } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-question',
-  imports: [],
+  standalone: true,
+  imports: [ReactiveFormsModule],
   template: `
-  <section class="add-question-section"  [class.active]="addQuestionVisible" (click)="onBackgroundClick($event)">
-    <form class="quiz-container">
-          <div class="question-section">
-            <label for="question" class="question-label">Question <i class="fa-solid fa-xmark" (click)="closeAddQuestion()"></i></label>
-            <input type="text" id="question" placeholder="Your Question Here..." class="question-input"/>
+  <section class="add-question-section" [class.active]="addQuestionVisible" (click)="onBackgroundClick($event)">
+    <form class="quiz-container" [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+      <!-- Question Section -->
+      <div class="question-section">
+        <label for="question" class="question-label"> Question <i class="fa-solid fa-xmark" (click)="closeAddQuestion()"></i></label>
+        <input type="text" id="question" placeholder="Your Question Here..." class="question-input" formControlName="question"/>
+        @if(quizForm.get('question')?.invalid && quizForm.get('question')?.touched) {
+          <small style="color: var(--error-color);">Question is required</small>
+        }
+      </div>
+      
+      <!-- Choices Section -->
+      <div formArrayName="choices" class="choices-section">
+        <p class="choices-label">Choices</p>
+        @for(choice of choices.controls; track choice; let i = $index) {
+          <div [formGroupName]="i" class="choice-item">
+            <span class="choice-label">{{ choicesLetters[i] }}:</span>
+            <input type="text" placeholder="Add Choice {{ i + 1 }}" class="choice-input" formControlName="choiceText"/>
           </div>
-        
-          <div class="choices-section">
-            <p class="choices-label">Choices</p>
-            @for(letter of choicesLetters.slice(0, nbQuestion); track letter) {
-              <div class="choice-item">
-                    <span class="choice-label">{{ letter }}:</span>
-                    <input type="text" [placeholder]="'Add Question ' + (choicesLetters.indexOf(letter) + 1)" class="choice-input" />
-              </div>
-            }
-            <button class="add-choice-btn" (click)="addNewQuestion()">Add a New Choice</button>
-          </div>
+        }
+        <button type="button" class="add-choice-btn" (click)="addNewChoice()" [disabled]="disabledAddChoice" [class.active-diseable]="disabledAddChoice">Add a New Choice</button>
+      </div>
 
-          <div class="correct-answer-section">
-            <label for="correct-answer" class="answer-label">Correct Answer</label>
-            <input type="text" id="correct-answer" placeholder="Add the correct answer..." class="answer-input"/>
-          </div>
-          <button type="submit" class="form-submit-btn">Save</button>
+      <!-- Correct Answer Section -->
+      <div class="correct-answer-section">
+        <label for="correct-answer" class="answer-label">Correct Answer</label>
+        <input type="text" id="correct-answer" placeholder="Add the correct answer..." class="answer-input" formControlName="correctAnswer"/>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="form-submit-btn" [disabled]="quizForm.invalid" [class.active-diseable]="quizForm.invalid">Save</button>
     </form>
   </section>
   `,
-  styleUrl: './add-question.component.css'
+  styleUrls: ['./add-question.component.css']
 })
 export class AddQuestionComponent {
-    choicesLetters = ['A', 'B', 'C', 'D'];
-    nbQuestion = 3;
-    // Passing data from parent to child
-    @Input() addQuestionVisible = true;
+  choicesLetters = ['A', 'B', 'C', 'D']; 
+  @Input() addQuestionVisible = true;
+  disabledAddChoice = false;
 
-    addNewQuestion(): void {
-      this.nbQuestion = this.nbQuestion + 1;
-    }
-   
-    removeChoice(choice: string): void {
-    }
+  quizForm: FormGroup;
 
-    closeAddQuestion(): void {
-      this.addQuestionVisible = false;
-    }
+  constructor(private fb: FormBuilder) {
+    this.quizForm = this.fb.group({
+      question: ['', Validators.required],
+      choices: this.fb.array([this.createChoice(), this.createChoice()]), // Initialize with 3 choices
+      correctAnswer: ['', Validators.required]
+    });
+  }
 
-    // Close the pop-up if the background is clicked
-    onBackgroundClick(event: MouseEvent): void {
-      if(event.target == event.currentTarget){
-        this.closeAddQuestion();
+  // Getter for FormArray
+  get choices(): FormArray {
+    return this.quizForm.get('choices') as FormArray;
+  }
+
+  // Create a new choice FormGroup
+  createChoice(): FormGroup {
+    return this.fb.group({
+      choiceText: ['', Validators.required]
+    });
+  }
+
+  // Add a new choice
+  addNewChoice(): void {
+    if (this.choices.length < this.choicesLetters.length) {
+      this.choices.push(this.createChoice());
+    } else {
+     this.disabledAddChoice = true;
     }
   }
+
+  // Close the form pop-up
+  readonly defaultChoicesCount = 2;
+
+  closeAddQuestion(): void {
+    this.addQuestionVisible = false;
+  
+    this.choices.clear();
+    for (let i = 0; i < this.defaultChoicesCount; i++) {
+      this.choices.push(this.createChoice());
+    }
+  
+    this.quizForm.patchValue({
+      question: '',
+      correctAnswer: ''
+    });
+  }
+  
+  
+
+  // Close the pop-up when clicking outside the form
+  onBackgroundClick(event: MouseEvent): void {
+    if (event.target === event.currentTarget) {
+      this.closeAddQuestion();
+    }
+  }
+
+  // Handle form submission
+  onSubmit(): void {
+    if (this.quizForm.valid) {
+      console.log('Form Submitted:', this.quizForm.value); // insert in the dataBase
+      this.closeAddQuestion();
+    } else {
+      console.error('Form is invalid!');
+    }
+  }
+
 }
+
 /*
-  - Solve addNewQuestion bug: the add question disappear when I click on that button
+- Add notification, confirm the form submission
+- It seems like the quizForm.reset does work 
 */

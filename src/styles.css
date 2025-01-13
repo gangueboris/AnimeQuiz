@@ -180,11 +180,14 @@ button{
     margin-top: 2rem;
   }
   
-  .add-choice-btn:hover:hover, .form-submit-btn:hover {
+  /*.add-choice-btn:hover:hover, .form-submit-btn:hover {
     background:var(--background-color);
     transition: var(--transition);
+  }*/
+  .active-diseable {
+    background:var(--background-color);
+
   }
-  
   .correct-answer-section {
     margin-top: 20px;
   }

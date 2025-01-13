@@ -42,7 +42,7 @@ import { Component, signal } from '@angular/core';
                   <label for="correct-answer" class="answer-label">Correct Answer</label>
                   <input type="text" id="correct-answer" placeholder="Add the correct answer..." class="answer-input" [value]="dataQuestions[i].correct_answer"/>
                 </div>
-                <button type="submit" class="form-submit-btn">Save</button>
+                <button type="button" class="form-submit-btn">Save</button>
               }
               @if(!dataQuestions[i].isVisible) {
                 <i class="fa-solid fa-trash-can delete-icon" (click)="toggleDeleteQuestion(i)"></i>
