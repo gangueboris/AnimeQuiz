@@ -80,7 +80,7 @@ span {
 
 .delete-question-section.active {
     opacity: 1;
-    visibility:visible;
+    visibility: visible;
 }
 
 .delete-question__container{

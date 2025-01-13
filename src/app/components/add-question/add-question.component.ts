@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-add-question',
   imports: [],
   template: `
-  <section>
+  <section class="add-question-section"  [class.active]="addQuestionVisible" (click)="onBackgroundClick($event)">
     <form class="quiz-container">
           <div class="question-section">
-            <label for="question" class="question-label">Question <i class="fa-solid fa-xmark"></i></label>
+            <label for="question" class="question-label">Question <i class="fa-solid fa-xmark" (click)="closeAddQuestion()"></i></label>
             <input type="text" id="question" placeholder="Your Question Here..." class="question-input"/>
           </div>
         
@@ -35,12 +35,27 @@ import { Component } from '@angular/core';
 export class AddQuestionComponent {
     choicesLetters = ['A', 'B', 'C', 'D'];
     nbQuestion = 3;
+    // Passing data from parent to child
+    @Input() addQuestionVisible = true;
 
-    addNewQuestion():void {
+    addNewQuestion(): void {
       this.nbQuestion = this.nbQuestion + 1;
     }
    
-    removeChoice(choice: string):void {
-
+    removeChoice(choice: string): void {
     }
+
+    closeAddQuestion(): void {
+      this.addQuestionVisible = false;
+    }
+
+    // Close the pop-up if the background is clicked
+    onBackgroundClick(event: MouseEvent): void {
+      if(event.target == event.currentTarget){
+        this.closeAddQuestion();
+    }
+  }
 }
+/*
+  - Solve addNewQuestion bug: the add question disappear when I click on that button
+*/

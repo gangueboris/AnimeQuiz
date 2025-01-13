@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
+import { AddQuestionComponent } from "../add-question/add-question.component";
 @Component({
   selector: 'app-home',
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, AddQuestionComponent],
   template: `
   <!-- ======================== NAVBAR =============================-->
     <nav>
@@ -15,14 +16,17 @@ import { Router, RouterOutlet } from '@angular/router';
         </div>
     </nav>
 
+  <!-- ======================== ADD-QUESTION COMPONENT =============================-->
+  <app-add-question [addQuestionVisible]="isAddQuestionVisible"/>
+
 <!-- ======================== HOME =============================-->
     <section>
       <div class="home__container container">
         <div class="card__container">
           <div class="card__header">
-              <img ngSrc="assets/readyQuiz.svg" alt="quiz image" height="200" width="260">
+              <img ngSrc="assets/readyQuiz.svg" alt="quiz image" height="200" width="260" priority="">
               <button class="card__options-btn" (click)="toggleOptions()"><i class="fa-solid fa-ellipsis"></i></button>
-              <div class="card__options" [class.visible]="optionsVisible">
+              <div class="card__options" [class.visible]="optionsVisible" (click)="onBackgroundClick($event)">
                   <button class="add" (click)="addQuestion()"><i class="fa-solid fa-plus"></i></button>
                   <button class="edit" (click)="editQuestion()"><i class="fa-regular fa-pen-to-square"></i></button>
                   <!--<button class="delete"><i class="fa-solid fa-trash-can"></i></button>-->
@@ -65,27 +69,39 @@ export class HomeComponent {
   nbQuestions = 0;
   successRate = 0;
   optionsVisible = false;
+  isAddQuestionVisible = false;
 
 
   // Redirection Functions
-  goToQuiz():void {
+  goToQuiz(): void {
     this.router.navigate(['/quiz']);
   }
-  goToProfile():void {
+  goToProfile(): void {
     this.router.navigate(['/profile']);
   }
 
-  addQuestion():void {
-     this.router.navigate(['/add-question']);
+  toggleOptions(): void {
+    this.optionsVisible = !this.optionsVisible;
+  }
+
+  addQuestion(): void {
+    this.isAddQuestionVisible = !this.isAddQuestionVisible;
+    //console.log(this.isAddQuestionVisible);
+    // Close options
+    this.toggleOptions();
   }
 
   editQuestion(): void {
     this.router.navigate(['/edit-question']);
   }
-
-  toggleOptions():void {
-    this.optionsVisible = !this.optionsVisible;
+   // Close the pop-up if the background is clicked
+  onBackgroundClick(event: MouseEvent): void {
+    if(event.target == event.currentTarget){
+      this.toggleOptions();
+    }
   }
+  
+
   
 
   // Array of {linkToRef, name} // Put it into a service: For Footer
@@ -100,3 +116,9 @@ export class HomeComponent {
 ];
 
 }
+
+/*
+ - To solve the issue of the addQuestion(), I have to understand the live cycle of
+ angular...
+ - Would like to have when click on background of the options__container, it will close
+*/
