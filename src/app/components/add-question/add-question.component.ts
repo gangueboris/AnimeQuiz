@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-question',
@@ -20,9 +20,9 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } fr
       <div formArrayName="choices" class="choices-section">
         <p class="choices-label">Choices</p>
         @for(choice of choices.controls; track choice; let i = $index) {
-          <div [formGroupName]="i" class="choice-item">
+          <div class="choice-item">
             <span class="choice-label">{{ choicesLetters[i] }}:</span>
-            <input type="text" placeholder="Add Choice {{ i + 1 }}" class="choice-input" formControlName="choiceText"/>
+            <input type="text" placeholder="Add Choice {{ i + 1 }}" class="choice-input" [formControlName]="i"/>
           </div>
         }
         <button type="button" class="add-choice-btn" (click)="addNewChoice()" [disabled]="disabledAddChoice" [class.active-diseable]="disabledAddChoice">Add a New Choice</button>
@@ -61,12 +61,11 @@ export class AddQuestionComponent {
     return this.quizForm.get('choices') as FormArray;
   }
 
-  // Create a new choice FormGroup
-  createChoice(): FormGroup {
-    return this.fb.group({
-      choiceText: ['', Validators.required]
-    });
+  // Create a new choice FormControl
+  createChoice(): FormControl {
+    return this.fb.control('', Validators.required);
   }
+  
 
   // Add a new choice
   addNewChoice(): void {

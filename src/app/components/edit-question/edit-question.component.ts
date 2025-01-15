@@ -30,7 +30,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } fr
             </div>
             
               @if(data.isVisible) {
-                <div class="choices-section">
+                <div formArrayName="choices" class="choices-section">
                   <p class="choices-label">Choices</p>
                   @for(choice of choices(i).controls; track choice; let j = $index) {
                     <div class="choice-item">

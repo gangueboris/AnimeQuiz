@@ -17,12 +17,10 @@
 
 
 ????
- @for(choice of choices.controls; track choice; let i = $index) {
-    <div [formGroupName]="i" class="choice-item">
-    <span class="choice-label">{{ choicesLetters[i] }}:</span>
-    <input type="text" placeholder="Add Choice {{ i + 1 }}" class="choice-input" formControlName="choiceText"/>
-    </div>
-}
+- How really works formControls ??
+- What does form__Name ??
+- How to initialize inputs when using forms ?
 
-WHat to do next with choice ??
-why this ?? [formGroupName]="i
+FormGroup: static, FormArray: Dynamic
+
+FormArrayName, FormGroupName are very important, il missing, it will not work.
