@@ -19,7 +19,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, FormArray, Va
       <!-- Choices Section -->
       <div formArrayName="choices" class="choices-section">
         <p class="choices-label">Choices</p>
-        @for(choice of choices.controls; track choice; let i = $index) {
+        @for(choice of choices.controls; track $index; let i = $index) {
           <div class="choice-item">
             <span class="choice-label">{{ choicesLetters[i] }}:</span>
             <input type="text" placeholder="Add Choice {{ i + 1 }}" class="choice-input" [formControlName]="i"/>

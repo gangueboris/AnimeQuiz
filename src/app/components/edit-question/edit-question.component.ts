@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup,FormControl, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-question',
@@ -36,8 +36,10 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } fr
                     <div class="choice-item">
                       <span class="choice-label">{{ choicesLetters[j] }}:</span>
                       <input type="text" [placeholder]="'Add Question ' + (j + 1)" class="choice-input" [value]="choice.value" [formControlName]="j"/>
+                      <i class="fa-solid fa-xmark close-btn" (click)="removeChoice(i, j)" [class.visible]="closeChoiceVisible[i]"></i>
                     </div>
                   }
+                  <button type="button" class="add-choice-btn" (click)="addNewChoice(i)" [class.active-diseable]="disabledAddChoice[i]">Add a New Choice</button>
                 </div>
                 
                 <!-- Correct answers -->
@@ -47,7 +49,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } fr
                 </div>
 
                 <!-- Save button -->
-                <button type="submit" class="form-submit-btn">Save</button>
+                <button type="submit" class="form-submit-btn" [disabled]="quizForms[i].invalid" [class.active-diseable]="quizForms[i].invalid">Save</button>
               }
             
             @if(!data.isVisible) {
@@ -80,9 +82,13 @@ export class EditQuestionComponent implements OnInit{
   choicesLetters = ['A', 'B', 'C', 'D'];
   delQuestionNumber = signal(1);
   isActiveDelQuestSection = false;
+  disabledAddChoice: boolean[] = [];
+  closeChoiceVisible: boolean[] = [];
   quizForms: FormGroup[] = [];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    this.initCloseChoiceVisible();
+  }
 
   ngOnInit(): void {
     this.initializeForms();
@@ -125,6 +131,8 @@ export class EditQuestionComponent implements OnInit{
   // Handle form submission
   onUpdateSubmit(index: number): void {
     if (this.quizForms[index].valid) {
+      // Toggle the icon to let know that the file is submitted
+      this.toggleVisibleIcon(index);
       console.log('Form Submitted:', this.quizForms[index].value, index);
       // Insert logic to save to the database
     } else {
@@ -139,30 +147,52 @@ export class EditQuestionComponent implements OnInit{
 
   // Delete question
   toggleDeleteQuestion(index: number): void {
-    this.dataQuestions.splice(index, 1);
-    this.quizForms.splice(index, 1);
+    //this.dataQuestions.splice(index, 1);
+    //this.quizForms.splice(index, 1);
   }
- 
+
+  removeChoice(questionIndex: number, optionIndex: number): void {
+    this.choices(questionIndex).removeAt(optionIndex);
+    if(this.choices(questionIndex).length == 2) {
+      this.closeChoiceVisible[questionIndex] = true;
+    }
+    // disable = true when I remove choice
+    this.disabledAddChoice[questionIndex] = false;
+  }
+  // Function to initialize closeChoice array
+  initCloseChoiceVisible(): void {
+    for(let i = 0; i < this.dataQuestions.length; i++) {
+      this.closeChoiceVisible.push(false);
+      this.disabledAddChoice.push(false);
+    }
+   
+  }
+  // Create a new choice FormControl
+  createChoice(): FormControl {
+    return this.fb.control('', Validators.required);
+  }
   
 
-  /*================= CLOSING ICONS ==================*/
- // toggleVisibleIcon(index: number):void {
-    //this.dataQuestions[index].isVisible = !this.dataQuestions[index].isVisible;
-  //}
+  // Add a new choice
+  addNewChoice(questionIndex: number): void {
+    // logic to show close btn when add new choies and nbChoices > 2
+    if(this.choices(questionIndex).length >= 2) {
+      this.closeChoiceVisible[questionIndex] = false;
+    }
 
-  /*================= QUESTIONS DELETION LOGIC ==================*/
- /* toggleDeleteQuestion(index: number): void {
-    // Update delete question variable
-    //this.delQuestionNumber.update((val) => index + 1);
-    this.isActiveDelQuestSection = !this.isActiveDelQuestSection;
-  }
-  removeChoice(choice: string):void {
+    // Add new choice when it possible
+    if (this.choices(questionIndex).length < this.choicesLetters.length) {
+      this.choices(questionIndex).push(this.createChoice());
+    } else {
+      this.disabledAddChoice[questionIndex] = true;
+    }
   }
 
 
   /*=================METHODs FOR DELETE POP-UP==================*/
   cancelDelete(): void {
     this.isActiveDelQuestSection = !this.isActiveDelQuestSection;
+  
   }
 
   // Close the pop-up if the background is clicked

@@ -126,3 +126,15 @@ span {
     background: var(--error-color);
 
 }
+
+.close-btn {
+    color: var(--error-color);
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.close-btn.visible {
+    opacity: 0;
+    visibility: hidden;
+
+}
