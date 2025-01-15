@@ -136,7 +136,7 @@ export class EditQuestionComponent implements OnInit{
       console.log('Form Submitted:', this.quizForms[index].value, index);
       // Insert logic to save to the database
     } else {
-      console.error('Form is invalid!');
+      console.error('Form is invalid !');
     }
   }
 
