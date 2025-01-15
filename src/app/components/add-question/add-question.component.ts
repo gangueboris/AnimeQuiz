@@ -3,11 +3,10 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } fr
 
 @Component({
   selector: 'app-add-question',
-  standalone: true,
   imports: [ReactiveFormsModule],
   template: `
   <section class="add-question-section" [class.active]="addQuestionVisible" (click)="onBackgroundClick($event)">
-    <form class="quiz-container" [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+    <form class="quiz-container" [formGroup]="quizForm" (ngSubmit)="onAddSubmit()">
       <!-- Question Section -->
       <div class="question-section">
         <label for="question" class="question-label"> Question <i class="fa-solid fa-xmark" (click)="closeAddQuestion()"></i></label>
@@ -95,22 +94,21 @@ export class AddQuestionComponent {
     });
   }
   
+  // Handle form submission
+  onAddSubmit(): void {
+    if (this.quizForm.valid) {
+      console.log('Form Submitted:', this.quizForm.value); // insert in the dataBase
+      this.closeAddQuestion();
+    } else {
+      console.error('Form is invalid!');
+    }
+  }
   
 
   // Close the pop-up when clicking outside the form
   onBackgroundClick(event: MouseEvent): void {
     if (event.target === event.currentTarget) {
       this.closeAddQuestion();
-    }
-  }
-
-  // Handle form submission
-  onSubmit(): void {
-    if (this.quizForm.valid) {
-      console.log('Form Submitted:', this.quizForm.value); // insert in the dataBase
-      this.closeAddQuestion();
-    } else {
-      console.error('Form is invalid!');
     }
   }
 

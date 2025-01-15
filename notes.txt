@@ -12,3 +12,17 @@
 
 ================================= TODO =====================================
 - Work on edit quiz, make it functionnal
+- Make more reseach one ReactiveForm, FormArray, FormGroup, FormControl
+- There is a big problem on edit-question page, related to my understanding of Angular Reactive forms
+
+
+????
+ @for(choice of choices.controls; track choice; let i = $index) {
+    <div [formGroupName]="i" class="choice-item">
+    <span class="choice-label">{{ choicesLetters[i] }}:</span>
+    <input type="text" placeholder="Add Choice {{ i + 1 }}" class="choice-input" formControlName="choiceText"/>
+    </div>
+}
+
+WHat to do next with choice ??
+why this ?? [formGroupName]="i

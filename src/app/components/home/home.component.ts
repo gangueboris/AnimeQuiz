@@ -6,20 +6,20 @@ import { AddQuestionComponent } from "../add-question/add-question.component";
   selector: 'app-home',
   imports: [NgOptimizedImage, AddQuestionComponent],
   template: `
-  <!-- ======================== NAVBAR =============================-->
+  <!-- NAVBAR -->
     <nav>
         <div class="nav__container container">
             <a href=""><h1 class="logo">AnimeQuiz</h1></a>
             <div class="profile__container">
-               <p>Welcome AnimeQuizer <span> {{userXP }} XP</span></p>
+               <p>Welcome AnimeQuizer <span> {{ userXP }} XP</span></p>
             </div>
         </div>
     </nav>
 
-  <!-- ======================== ADD-QUESTION COMPONENT =============================-->
+<!-- ADD-QUESTION COMPONENT -->
   <app-add-question [addQuestionVisible]="isAddQuestionVisible"/>
 
-<!-- ======================== HOME =============================-->
+<!-- HOME -->
     <section>
       <div class="home__container container">
         <div class="card__container">
@@ -28,6 +28,7 @@ import { AddQuestionComponent } from "../add-question/add-question.component";
                <img ngSrc="assets/readyQuiz.svg" alt="quiz image"  height="200" width="260" priority>
             </div>
               <button class="card__options-btn" (click)="toggleOptions()"><i class="fa-solid fa-ellipsis"></i></button>
+<!-- OPTIONS -->
               <div class="card__options" [class.visible]="optionsVisible" (click)="onBackgroundClick($event)">
                   <button class="add" (click)="addQuestion()"><i class="fa-solid fa-plus"></i></button>
                   <button class="edit" (click)="editQuestion()"><i class="fa-regular fa-pen-to-square"></i></button>
@@ -46,20 +47,20 @@ import { AddQuestionComponent } from "../add-question/add-question.component";
       </div>
     </section>
 
- <!-- ======================== FOOTER =============================-->
+ <!-- FOOTER -->
    <footer>
-          <div class="footer__container container">
-                <div class="footer__header">
-                  <a href=""><h1 class="logo">AnimeQuiz</h1></a>
-                </div>
-                <div class="footer__links">
-                  <ul>
-                      @for (obj of referenceLinksArray; track obj.name) {
-                        <li><a [href]="obj.link" target="_blank">{{ obj.name }}</a></li>
-                      }
-                  </ul>
-                </div>
+        <div class="footer__container container">
+          <div class="footer__header">
+            <a href=""><h1 class="logo">AnimeQuiz</h1></a>
           </div>
+          <div class="footer__links">
+            <ul>
+                @for (obj of referenceLinksArray; track obj.name) {
+                  <li><a [href]="obj.link" target="_blank">{{ obj.name }}</a></li>
+                }
+            </ul>
+          </div>
+        </div>
     </footer> 
   `,
   styleUrls: ['./home.component.css']
@@ -74,7 +75,7 @@ export class HomeComponent {
   isAddQuestionVisible = false;
 
 
-  // Redirection Functions
+  /*=== Redirecte functions ====*/
   goToQuiz(): void {
     this.router.navigate(['/quiz']);
   }
@@ -82,21 +83,22 @@ export class HomeComponent {
     this.router.navigate(['/profile']);
   }
 
+  /*=== Toggle Handling ====*/
   toggleOptions(): void {
     this.optionsVisible = !this.optionsVisible;
+  }
+   
+  editQuestion(): void {
+    this.router.navigate(['/edit-question']);
   }
 
   addQuestion(): void {
     this.isAddQuestionVisible = !this.isAddQuestionVisible;
-    //console.log(this.isAddQuestionVisible);
     // Close options
     this.toggleOptions();
   }
 
-  editQuestion(): void {
-    this.router.navigate(['/edit-question']);
-  }
-   // Close the pop-up if the background is clicked
+  /*=== Close the pop-up if the background is clicked ====*/
   onBackgroundClick(event: MouseEvent): void {
     if(event.target == event.currentTarget){
       this.toggleOptions();
@@ -106,7 +108,7 @@ export class HomeComponent {
 
   
 
-  // Array of {linkToRef, name} // Put it into a service: For Footer
+  /*=== Array of {linkToRef, name} // Put it into a service: For Footer ===*/
   referenceLinksArray = [
     { link: "https://angular.dev/guide/routing", name: "Routing" },
     { link: "https://angular.dev/guide/forms", name: "Forms" },
