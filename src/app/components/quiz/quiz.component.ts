@@ -139,7 +139,7 @@ export class QuizComponent implements OnInit{
       const userResponse = this.userResponses[i].user_response;
       const correctAnswer = this.dataQuestions[i].correct_answer;
      
-      if(userResponse.trim() === correctAnswer.trim()) {
+      if(userResponse?.trim() === correctAnswer?.trim()) {
         this.successAnswers++;
       }
     }
