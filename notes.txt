@@ -8,7 +8,16 @@
 ================================= REFLEXION =====================================
 - For nexts projects, start by the back-end, design the api, create the dataBase
 - When comes in the UI, test the api before starting coding the UI.
+- Sometimes, it is I have to manipulate the DOM to achive some result(conf selectedQuestion() in the quizComponennt)
 
+/*========Modify DOM elements in a loop ==> select that element in the DOM =========*/
+- When I have to modify a specific elements in a loop, I add an unique id to that element
+and select it in the DOM.
+
+/*========Type issues ==> interface =========*/
+- When I create an array of something, typeScript doesn't know type of it elements. So when I would like to access
+it elements value (for example with object), it will to lead to an error.
+To fix the issue, we have to use interface, help us to specify the type.
 
 ================================= TODO =====================================
 - Work on edit quiz, make it functionnal

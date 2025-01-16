@@ -74,6 +74,14 @@ section {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
+.question:hover {
+   background: var(--black-color);
+   transition: var(--transition);
+}
+
+.question.active {
+    background: var(--black-color);
+}
 .next-question{
     position: absolute;
     right: 0;

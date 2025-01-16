@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UserResponse } from '../home/types-quiz';
+
 
 @Component({
   selector: 'app-quiz',
@@ -10,7 +12,7 @@ import { Component } from '@angular/core';
         <div class="quiz__header">
           <div>
             <a href=""><h1 class="logo">AnimeQuiz</h1></a>
-            <p>{{ nbQuestion }} questions</p>
+            <p>{{ nbQuestions }} questions</p>
           </div>
           <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <span>00:02:54</span></div>
         </div>
@@ -24,7 +26,7 @@ import { Component } from '@angular/core';
               </div>
               <div class="questions__container-list">
                   @for(question of dataQuestions[nextIndex].incorrect_answers; track $index; let i = $index) {
-                    <div class="question">{{choicesLetters[i]}}: {{ question }}</div>
+                    <div  [class]="'question' + ' q'+ i"  (click)="selectedQuestion(i)">{{choicesLetters[i]}}: {{ question }}</div>
                   }
               </div>
               <button type="button" class="next-question" (click)="goToNextQuestion()">Next</button>
@@ -38,18 +40,18 @@ import { Component } from '@angular/core';
             <div class="complete-quiz-content">
                 <div class="img__container"><img src="assets/very-happy-emoji.png" alt="similer"></div>
                 <h1>Your Score</h1>
-                <p>{{ sucessAnswers }}/{{ nbQuestions }}</p>
+                <p>{{ successAnswers }}/{{ nbQuestions }}</p>
                 <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <p>00:02:54</p></div>
                 <button class="try-again-btn">Try Again</button>
             </div>
             <div class="result__container">
                <div class="answers">
                    <i class="fa-regular fa-circle-check"></i>
-                   <p>Correct Answers: {{ sucessAnswers }}</p>
+                   <p>Correct Answers: {{ successAnswers }}</p>
                </div>
                <div class="answers">
                   <i class="fa-regular fa-circle-xmark"></i>
-                  <p>Incorrect Answers: {{ nbQuestions - sucessAnswers }}</p>
+                  <p>Incorrect Answers: {{ nbQuestions - successAnswers }}</p>
                </div>
             </div>
         </div>
@@ -60,27 +62,81 @@ import { Component } from '@angular/core';
   `,
   styleUrl: './quiz.component.css'
 })
+
+/*============================== Interfaces definitions =================================== */
+
+
 export class QuizComponent {
   choicesLetters = ['A', 'B', 'C', 'D'];
-  nbQuestion = 4;
   nextIndex = 0;
-  sucessAnswers = 4;
-  nbQuestions = 5
+  successAnswers = 0;
+  nbQuestions = 5;
   quizResult = true;
-
-
-
-
+  userResponses: UserResponse[] = [];
+  
+  
   // Function to get the next question
   goToNextQuestion():void {
     // Update the nextIndex
     if(this.nextIndex < this.dataQuestions.length - 1) {
       this.nextIndex = this.nextIndex + 1;
     }else{
+      // Compute user response result
+      this.computeScore();
+      
+      // Show the result card
       this.quizResult = false;
+
+      // console log all user responses
+      //onsole.log(this.userResponses);
     }
     
-    
+    // Get the choosen answer, add it to the response array and the reset the active class
+    let userChoice = '';
+    const questionElements = document.getElementsByClassName('question');
+    for(let i = 0; i < questionElements.length; ++i){
+      if(questionElements[i].classList.contains('active')) {
+        userChoice = questionElements[i].textContent?.trim() ?? ''; // Use textContent and ensure it is not null;
+        break;
+      }
+    }
+    this.userResponses.push({'user_response': userChoice.split(':')[1]});
+    this.resetSelectedQuestion();
+  }
+  
+  // Function to clear remove the active on a list of questions
+  resetSelectedQuestion(): void {
+    const questionElements = document.getElementsByClassName('question');
+    for(let i = 0; i < questionElements.length; ++i) {
+      if(questionElements[i].classList.contains('active')) {
+        questionElements[i].classList.remove('active');
+      }
+    }
+  }
+
+  // Function to active the user choice
+  selectedQuestion(index: number): void {
+    // Get all elements with the class question and remove the active 
+    const questionElements = document.getElementsByClassName('question');
+    this.resetSelectedQuestion();
+
+    // Get element with the class 'q' + index
+    const questionElement = document.getElementsByClassName('q' + index);
+    questionElement[0].classList.add('active');
+  
+  }
+
+  computeScore(): void {
+    let userResponse = '';
+    for(let i = 0; i < this.userResponses.length; ++i) {
+      //userResponse = this.userResponses[i].user_response;
+      userResponse = this.userResponses[i].user_response;
+      
+      let correctAnswer = this.dataQuestions[i].correct_answer;
+      if(userResponse == correctAnswer) {
+        this.successAnswers += 1;
+      }
+    }
   }
 
 
@@ -144,7 +200,10 @@ export class QuizComponent {
 }
 
 /*
- - Hover the choice with a color and when it click, assign a color
- - implement the logic when the user click on a choice
- - Disable next button until a choice is made
+ - Hover the choice with a color and when it click, assign a color(Done)
+ - implement the logic when the user click on a choice(Done)
+ - Disable next button until a choice is made (Done)
+
+- Implement the logic to display shuffly correct and incorrects answers.
+ - Update nbQuestions when to load dataQuestions
 */
