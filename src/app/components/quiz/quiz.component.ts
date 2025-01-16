@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserResponse } from '../home/types-quiz';
 
 
@@ -25,7 +25,7 @@ import { UserResponse } from '../home/types-quiz';
                   <p>{{ dataQuestions[nextIndex].question }}</p>
               </div>
               <div class="questions__container-list">
-                  @for(question of dataQuestions[nextIndex].incorrect_answers; track $index; let i = $index) {
+                  @for(question of shuffledQuestions; track $index; let i = $index) {
                     <div  [class]="'question' + ' q'+ i"  (click)="selectedQuestion(i)">{{choicesLetters[i]}}: {{ question }}</div>
                   }
               </div>
@@ -66,25 +66,31 @@ import { UserResponse } from '../home/types-quiz';
 /*============================== Interfaces definitions =================================== */
 
 
-export class QuizComponent {
-  choicesLetters = ['A', 'B', 'C', 'D'];
+export class QuizComponent implements OnInit{
+  choicesLetters = ['A', 'B', 'C', 'D', 'E'];
   nextIndex = 0;
   successAnswers = 0;
   nbQuestions = 5;
   quizResult = true;
   userResponses: UserResponse[] = [];
+  shuffledQuestions: string[] = [];
   
+  ngOnInit(): void {
+    // Initialize the shuffleQuestions when the page is loaded
+    this.shuffledQuestions = this.getShuffledQuestions(this.nextIndex);
+  }
   
   // Function to get the next question
   goToNextQuestion():void {
     // Update the nextIndex
     if(this.nextIndex < this.dataQuestions.length - 1) {
       this.nextIndex = this.nextIndex + 1;
+      this.shuffledQuestions = this.getShuffledQuestions(this.nextIndex); // Update the shuffle array
     }else{
       // Compute user response result
       this.computeScore();
       
-      // Show the result card
+      // Show the result card by activating it visibility
       this.quizResult = false;
 
       // console log all user responses
@@ -117,7 +123,6 @@ export class QuizComponent {
   // Function to active the user choice
   selectedQuestion(index: number): void {
     // Get all elements with the class question and remove the active 
-    const questionElements = document.getElementsByClassName('question');
     this.resetSelectedQuestion();
 
     // Get element with the class 'q' + index
@@ -125,21 +130,34 @@ export class QuizComponent {
     questionElement[0].classList.add('active');
   
   }
-
+  
+  // Function to calculate the score of the user
   computeScore(): void {
-    let userResponse = '';
+   
     for(let i = 0; i < this.userResponses.length; ++i) {
       //userResponse = this.userResponses[i].user_response;
-      userResponse = this.userResponses[i].user_response;
-      
-      let correctAnswer = this.dataQuestions[i].correct_answer;
-      if(userResponse == correctAnswer) {
-        this.successAnswers += 1;
+      const userResponse = this.userResponses[i].user_response;
+      const correctAnswer = this.dataQuestions[i].correct_answer;
+     
+      if(userResponse.trim() === correctAnswer.trim()) {
+        this.successAnswers++;
       }
     }
   }
 
-
+  // Logic to get shuffled questions(correct + incorrects)
+  getShuffledQuestions(index: number): Array<string> {
+    let shuffledArray = this.dataQuestions[index].incorrect_answers;
+    let correctAnswer = this.dataQuestions[index].correct_answer;
+    shuffledArray.push(correctAnswer); // add correctAnwer to incorrectArray to shuffle them
+    
+    // Logic to randomize the array
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1)); // Random index
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // Swap
+    }
+    return shuffledArray;
+  }
 
 
 
@@ -204,6 +222,11 @@ export class QuizComponent {
  - implement the logic when the user click on a choice(Done)
  - Disable next button until a choice is made (Done)
 
-- Implement the logic to display shuffly correct and incorrects answers.
- - Update nbQuestions when to load dataQuestions
+- Implement the logic to display shuffly correct and incorrects answers (Done)
+- Update nbQuestions when to load dataQuestions ==> TO DO Letter when implement the backend
+
+ - Implement smile logic based on the result
+ - Make functionnable the try Again button
+ - Add logic to clock
+
 */

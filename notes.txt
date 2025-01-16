@@ -6,6 +6,8 @@
 
 
 ================================= REFLEXION =====================================
+
+/*======================= Project Organisation ======================*/
 - For nexts projects, start by the back-end, design the api, create the dataBase
 - When comes in the UI, test the api before starting coding the UI.
 - Sometimes, it is I have to manipulate the DOM to achive some result(conf selectedQuestion() in the quizComponennt)
@@ -18,6 +20,10 @@ and select it in the DOM.
 - When I create an array of something, typeScript doesn't know type of it elements. So when I would like to access
 it elements value (for example with object), it will to lead to an error.
 To fix the issue, we have to use interface, help us to specify the type.
+
+/*========Function in template ==> OnInit() =========*/
+- DO not put, function inside template, instead, put static array.
+So we can solve this issue initializing an array onInit()
 
 ================================= TODO =====================================
 - Work on edit quiz, make it functionnal
