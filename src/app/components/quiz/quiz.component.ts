@@ -14,7 +14,7 @@ import { UserResponse } from '../home/types-quiz';
             <a href=""><h1 class="logo">AnimeQuiz</h1></a>
             <p>{{ nbQuestions }} questions</p>
           </div>
-          <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <span>00:02:54</span></div>
+          <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <span>{{ timeElapsed }}</span></div>
         </div>
 
         <!-- Quiz Questions -->
@@ -41,7 +41,7 @@ import { UserResponse } from '../home/types-quiz';
                 <div class="img__container"><img [src]="'assets/' + emoji" alt="similer"></div>
                 <h1>Your Score</h1>
                 <p>{{ successAnswers }}/{{ nbQuestions }}</p>
-                <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <p>00:02:54</p></div>
+                <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <p>{{ timeElapsed }}</p></div>
                 <button class="try-again-btn" (click)="startQuiz()">Try Again</button>
             </div>
             <div class="result__container">
@@ -75,6 +75,9 @@ export class QuizComponent implements OnInit{
   emoji = "very-happy-emoji.png";
   userResponses: UserResponse[] = [];
   shuffledQuestions: string[] = [];
+  timeElapsed: string = '00:00:00';
+  startTime!: Date;
+  timerInterval: any;
   
   ngOnInit(): void {
     // Initialize the shuffleQuestions when the page is loaded
@@ -106,6 +109,12 @@ export class QuizComponent implements OnInit{
       
       // Show the result card by activating it visibility
       this.quizResult = false;
+
+      // Clear Time 
+      this.clearTimer();
+
+      // Hide the top clock
+      this.hideClock();
     }
     
     this.resetSelectedQuestion();
@@ -168,6 +177,33 @@ export class QuizComponent implements OnInit{
     this.successAnswers = 0;
     this.quizResult = true;
     this.shuffledQuestions = this.getShuffledQuestions(this.nextIndex);
+
+    this.startTime = new Date();
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+    this.timerInterval = setInterval(() => {
+      this.updateElapsedTime();
+    }, 1000);
+  }
+
+  // Clock functions
+  updateElapsedTime(): void {
+    const now = new Date();
+    const diff = now.getTime() - this.startTime.getTime();
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    this.timeElapsed = `${this.padNumber(hours)}:${this.padNumber(minutes)}:${this.padNumber(seconds)}`;
+  }
+  padNumber(num: number): string {
+    return num < 10 ? `0${num}` : num.toString();
+  }
+
+  clearTimer(): void {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 
   // Function to display the correct emoji based on user's result
@@ -182,7 +218,14 @@ export class QuizComponent implements OnInit{
       this.emoji = "very-happy-emoji.png";
     }
   }
+ 
 
+  // Function to set hide clock
+  hideClock(): void {
+    const clock = document.querySelector('.quiz-clock');
+    clock?.classList.add('visible');
+  }
+  
 
 
 
@@ -252,6 +295,6 @@ export class QuizComponent implements OnInit{
 
  - Implement smile logic based on the result (Done)
  - Make functionnable the try Again button (Done)
- - Solve the issue of correctAnswers in computeSocre
- - Add logic to clock
+ - Solve the issue of correctAnswers in computeSocre (Done)
+ - Add logic to clock (Done)
 */
