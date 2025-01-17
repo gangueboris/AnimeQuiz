@@ -38,11 +38,11 @@ import { UserResponse } from '../home/types-quiz';
       <div class="complete-quiz__container container" [class.visible]="quizResult">
             <!--<i class="fa-solid fa-xmark"></i>-->
             <div class="complete-quiz-content">
-                <div class="img__container"><img src="assets/very-happy-emoji.png" alt="similer"></div>
+                <div class="img__container"><img [src]="'assets/' + emoji" alt="similer"></div>
                 <h1>Your Score</h1>
                 <p>{{ successAnswers }}/{{ nbQuestions }}</p>
                 <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <p>00:02:54</p></div>
-                <button class="try-again-btn">Try Again</button>
+                <button class="try-again-btn" (click)="startQuiz()">Try Again</button>
             </div>
             <div class="result__container">
                <div class="answers">
@@ -72,16 +72,30 @@ export class QuizComponent implements OnInit{
   successAnswers = 0;
   nbQuestions = 5;
   quizResult = true;
+  emoji = "very-happy-emoji.png";
   userResponses: UserResponse[] = [];
   shuffledQuestions: string[] = [];
   
   ngOnInit(): void {
     // Initialize the shuffleQuestions when the page is loaded
-    this.shuffledQuestions = this.getShuffledQuestions(this.nextIndex);
+    this.startQuiz();
+    this.nbQuestions = this.dataQuestions.length;
   }
   
   // Function to get the next question
   goToNextQuestion():void {
+
+     // Get the choosen answer, add it to the response array and the reset the active class
+     let userChoice = '';
+     const questionElements = document.getElementsByClassName('question');
+     for(let i = 0; i < questionElements.length; ++i){
+       if(questionElements[i].classList.contains('active')) {
+         userChoice = questionElements[i].textContent?.trim() ?? ''; // Use textContent and ensure it is not null;
+         break;
+       }
+     }
+     this.userResponses.push({'user_response': userChoice.split(': ')[1] ?? ""});
+
     // Update the nextIndex
     if(this.nextIndex < this.dataQuestions.length - 1) {
       this.nextIndex = this.nextIndex + 1;
@@ -92,21 +106,8 @@ export class QuizComponent implements OnInit{
       
       // Show the result card by activating it visibility
       this.quizResult = false;
-
-      // console log all user responses
-      //onsole.log(this.userResponses);
     }
     
-    // Get the choosen answer, add it to the response array and the reset the active class
-    let userChoice = '';
-    const questionElements = document.getElementsByClassName('question');
-    for(let i = 0; i < questionElements.length; ++i){
-      if(questionElements[i].classList.contains('active')) {
-        userChoice = questionElements[i].textContent?.trim() ?? ''; // Use textContent and ensure it is not null;
-        break;
-      }
-    }
-    this.userResponses.push({'user_response': userChoice.split(':')[1]});
     this.resetSelectedQuestion();
   }
   
@@ -133,21 +134,22 @@ export class QuizComponent implements OnInit{
   
   // Function to calculate the score of the user
   computeScore(): void {
-   
-    for(let i = 0; i < this.userResponses.length; ++i) {
-      //userResponse = this.userResponses[i].user_response;
+    for(let i = 0; i < this.userResponses.length; i++) {
       const userResponse = this.userResponses[i].user_response;
       const correctAnswer = this.dataQuestions[i].correct_answer;
-     
+    
       if(userResponse?.trim() === correctAnswer?.trim()) {
         this.successAnswers++;
       }
     }
+
+    // update the emoji
+    this.emojiResultLogic();
   }
 
   // Logic to get shuffled questions(correct + incorrects)
   getShuffledQuestions(index: number): Array<string> {
-    let shuffledArray = this.dataQuestions[index].incorrect_answers;
+    let shuffledArray = [...this.dataQuestions[index].incorrect_answers]
     let correctAnswer = this.dataQuestions[index].correct_answer;
     shuffledArray.push(correctAnswer); // add correctAnwer to incorrectArray to shuffle them
     
@@ -158,6 +160,29 @@ export class QuizComponent implements OnInit{
     }
     return shuffledArray;
   }
+
+  // Shuffle and prepare the quiz
+  startQuiz(): void {
+    this.nextIndex = 0;
+    this.userResponses = [];
+    this.successAnswers = 0;
+    this.quizResult = true;
+    this.shuffledQuestions = this.getShuffledQuestions(this.nextIndex);
+  }
+
+  // Function to display the correct emoji based on user's result
+  emojiResultLogic(): void {
+    const score = (this.successAnswers / this.nbQuestions) * 100;
+   
+    if(score >= 0 && score < 50){
+      this.emoji = "confused-emoji.png";
+    }else if(score >= 50 && score < 75) {
+      this.emoji = "happy-emoji.png"; 
+    }else if(score >= 75 && score <= 100) {
+      this.emoji = "very-happy-emoji.png";
+    }
+  }
+
 
 
 
@@ -223,10 +248,10 @@ export class QuizComponent implements OnInit{
  - Disable next button until a choice is made (Done)
 
 - Implement the logic to display shuffly correct and incorrects answers (Done)
-- Update nbQuestions when to load dataQuestions ==> TO DO Letter when implement the backend
+- Update nbQuestions when to load dataQuestions ==> TO DO Letter when implement the backend (Done)
 
- - Implement smile logic based on the result
- - Make functionnable the try Again button
+ - Implement smile logic based on the result (Done)
+ - Make functionnable the try Again button (Done)
+ - Solve the issue of correctAnswers in computeSocre
  - Add logic to clock
-
 */

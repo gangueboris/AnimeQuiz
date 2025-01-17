@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, QueryList, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup,FormControl, FormArray, Validators } from '@angular/forms';
 
 @Component({
@@ -17,13 +17,13 @@ import { ReactiveFormsModule, FormBuilder, FormGroup,FormControl, FormArray, Val
 
       <div class="edit-question__container container">
         @for(data of dataQuestions; track data; let i = $index) {
-          <form #formElement [id]="'form-' + i" class="quiz-container" [formGroup]="quizForms[i]" (ngSubmit)="onUpdateSubmit(i)">
+          <form [id]="'form-' + i" class="quiz-container" [formGroup]="quizForms[i]" (ngSubmit)="onUpdateSubmit(i)">
             <div class="question-section">
               <label for="question" class="question-label">Question {{ i + 1 }}
                 @if(dataQuestions[i].isVisible) { 
-                  <i class="fa-solid fa-caret-down down-icon" (click)="toggleVisibleIcon(i); scrollToForm(i)"></i>
+                  <i class="fa-solid fa-caret-down down-icon" (click)="toggleVisibleIcon(i);"></i>
                 }@else {
-                  <i class="fa-solid fa-caret-up up-icon" (click)="toggleVisibleIcon(i); scrollToForm(i)"></i>
+                  <i class="fa-solid fa-caret-up up-icon" (click)="toggleVisibleIcon(i);"></i>
                 }
               </label>
               <input type="text" id="question" placeholder="Your Question Here..." class="question-input"  formControlName="question"/>
@@ -86,8 +86,7 @@ export class EditQuestionComponent implements OnInit{
   closeChoiceVisible: boolean[] = [];
   quizForms: FormGroup[] = [];
 
-  /*====*/
-  @ViewChildren('formElement') formElements!: QueryList<ElementRef>;
+ 
 
 
   constructor(private fb: FormBuilder) {
@@ -207,14 +206,6 @@ export class EditQuestionComponent implements OnInit{
   }
   
 
-  // Implementation of scroll logic
-  scrollToForm(index: number): void {
-    const formElement = this.formElements.toArray()[index];
-    if (formElement) {
-      formElement.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-  
     
 
 
