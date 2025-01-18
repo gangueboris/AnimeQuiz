@@ -12,7 +12,7 @@ import { UserResponse } from '../home/types-quiz';
         <div class="quiz__header">
           <div>
             <a href=""><h1 class="logo">AnimeQuiz</h1></a>
-            <p>{{ nbQuestions }} questions</p>
+            <p class="top-nb-questions">{{ nbQuestions }} questions</p>
           </div>
           <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <span>{{ timeElapsed }}</span></div>
         </div>
@@ -83,6 +83,7 @@ export class QuizComponent implements OnInit{
     // Initialize the shuffleQuestions when the page is loaded
     this.startQuiz();
     this.nbQuestions = this.dataQuestions.length;
+    this.clockLogic();
   }
   
   // Function to get the next question
@@ -114,7 +115,7 @@ export class QuizComponent implements OnInit{
       this.clearTimer();
 
       // Hide the top clock
-      this.hideClock();
+      this.clockLogic();
     }
     
     this.resetSelectedQuestion();
@@ -185,6 +186,8 @@ export class QuizComponent implements OnInit{
     this.timerInterval = setInterval(() => {
       this.updateElapsedTime();
     }, 1000);
+
+    this.clockLogic();
   }
 
   // Clock functions
@@ -221,9 +224,19 @@ export class QuizComponent implements OnInit{
  
 
   // Function to set hide clock
-  hideClock(): void {
+  clockLogic(): void {
     const clock = document.querySelector('.quiz-clock');
-    clock?.classList.add('visible');
+    const topNbQuestions = document.querySelector('.top-nb-questions');
+
+
+     if(clock?.classList.contains('visible')) {
+      clock?.classList.remove('visible');
+      topNbQuestions?.classList.remove('visible');
+     }else {
+      clock?.classList.add('visible');
+      topNbQuestions?.classList.add('visible');
+     }
+    
   }
   
 

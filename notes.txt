@@ -21,16 +21,18 @@ and select it in the DOM.
 it elements value (for example with object), it will to lead to an error.
 To fix the issue, we have to use interface, help us to specify the type.
 
-/*========Function in template ==> OnInit() =========*/
+/*========Function in template
+ ==> OnInit() =========*/
 - DO not put, function inside template, instead, put static array.
 So we can solve this issue initializing an array onInit()
 
 ================================= TODO =====================================
-- Work on edit quiz, make it functionnal
-- Make more reseach one ReactiveForm, FormArray, FormGroup, FormControl
-- There is a big problem on edit-question page, related to my understanding of Angular Reactive forms
+- Work on edit quiz, make it functionnal (Done)
+- Make more reseach one ReactiveForm, FormArray, FormGroup, FormControl (Done)
+- There is a big problem on edit-question page, related to my understanding of Angular Reactive forms (Done)
 
-
+- Work on services: group common method in each component and put them in a service
+- Design the database
 ????
 - How really works formControls ??
 - What does form__Name ??
