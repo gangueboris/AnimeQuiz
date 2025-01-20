@@ -1,5 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup,FormControl, FormArray, Validators } from '@angular/forms';
+import { flatMap } from 'rxjs';
 
 @Component({
   selector: 'app-edit-question',
@@ -20,7 +21,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup,FormControl, FormArray, Val
           <form [id]="'form-' + i" class="quiz-container" [formGroup]="quizForms[i]" (ngSubmit)="onUpdateSubmit(i)">
             <div class="question-section">
               <label for="question" class="question-label">Question {{ i + 1 }}
-                @if(dataQuestions[i].isVisible) { 
+                @if( isFormVisible(i)) { 
                   <i class="fa-solid fa-caret-down down-icon" (click)="toggleVisibleIcon(i);"></i>
                 }@else {
                   <i class="fa-solid fa-caret-up up-icon" (click)="toggleVisibleIcon(i);"></i>
@@ -29,7 +30,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup,FormControl, FormArray, Val
               <input type="text" id="question" placeholder="Your Question Here..." class="question-input"  formControlName="question"/>
             </div>
             
-              @if(data.isVisible) {
+              @if( isFormVisible(i)) {
                 <div formArrayName="choices" class="choices-section">
                   <p class="choices-label">Choices</p>
                   @for(choice of choices(i).controls; track choice; let j = $index) {
@@ -52,7 +53,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup,FormControl, FormArray, Val
                 <button type="submit" class="form-submit-btn" [disabled]="quizForms[i].invalid" [class.active-diseable]="quizForms[i].invalid">Save</button>
               }
             
-            @if(!data.isVisible) {
+            @if(!isFormVisible(i)) {
               <i class="fa-solid fa-trash-can delete-icon" (click)="toggleDeleteQuestion(i)"></i>
             }
           </form>
@@ -145,7 +146,23 @@ export class EditQuestionComponent implements OnInit{
 
   // Toggle visibility of question
   toggleVisibleIcon(index: number): void {
-    this.dataQuestions[index].isVisible = !this.dataQuestions[index].isVisible;
+    const formElement = document.getElementById('form-'+ index);
+    if(this.isFormVisible(index)) {
+      formElement?.classList.remove('isFormVisible');
+    }else {
+      formElement?.classList.add('isFormVisible');
+    }
+  }
+  
+  // Function to check is the form is visible or not
+  isFormVisible(formId: number) : boolean {
+    const formElement = document.getElementById('form-'+ formId);
+    if(formElement?.classList.contains('isFormVisible')) {
+      return true;
+    }else {
+      return false;
+    }
+  
   }
 
   // Delete question
@@ -211,61 +228,53 @@ export class EditQuestionComponent implements OnInit{
 
 
 
-    dataQuestions = [
-          {
-            "type": "multiple",
-            "difficulty": "medium",
-            "category": "Entertainment: Japanese Anime &amp; Manga",
-            "question": "In &quot;Little Witch Academia&quot;, what is Shiny Chariot&#039;s alias at Luna Nova Academy?",
-            "correct_answer": "Ursula Callistis",
-            "incorrect_answers": [
-              "Croix Meridies",
-              "Miranda Holbrook",
-              "Anne Finnelan", 
-              "Boris gangue",
-            ],
-            "isVisible": false
-          },
-          {
-            "type": "multiple",
-            "difficulty": "medium",
-            "category": "Entertainment: Japanese Anime &amp; Manga",
-            "question": "In &quot;Black Lagoon&quot;, what colour is Rock&#039;s tie?",
-            "correct_answer": "Teal",
-            "incorrect_answers": [
-              "Crimson",
-              "Dark Brown",
-              "Black"
-            ],
-            "isVisible": false
-          },
-          {
-            "type": "multiple",
-            "difficulty": "medium",
-            "category": "Entertainment: Japanese Anime &amp; Manga",
-            "question": "In the ADV (English) Dub of the anime &quot;Ghost Stories&quot;, which character is portrayed as a Pentacostal Christian?",
-            "correct_answer": "Momoko Koigakubo",
-            "incorrect_answers": [
-              "Hajime Aoyama",
-              "Satsuki Miyanoshita",
-              "Mio Itai"
-            ],
-            "isVisible": false
-          },
-          {
-            "type": "multiple",
-            "difficulty": "medium",
-            "category": "Entertainment: Japanese Anime &amp; Manga",
-            "question": "Which of the stands from &quot;JoJo&#039;s Bizarre Adventure&quot; mimics the likeness of a tomato?",
-            "correct_answer": "Pearl Jam",
-            "incorrect_answers": [
-              "Red Hot Chili Pepper",
-              "Cream Starter",
-              "Nut King Call"
-            ],
-            "isVisible": false
-          }
-        ]
+  dataQuestions = [
+    {
+      question: "What is the name of the main protagonist in the anime What is the name of the main protagonist in the anime 'Naruto'?",
+      correct_answer: "Naruto Uzumaki",
+      incorrect_answers: [
+        "Sasuke Uchiha",
+        "Kakashi Hatake",
+        "Sakura Haruno"
+      ]
+    },
+    {
+      question: "In 'Attack on Titan', what is the name of the Titan form used by Eren Yeager?",
+      correct_answer: "Attack Titan",
+      incorrect_answers: [
+        "Colossal Titan",
+        "Armored Titan",
+        "Beast Titan"
+      ]
+    },
+    {
+      question: "Which anime features the character Light Yagami and a notebook that can kill?",
+      correct_answer: "Death Note",
+      incorrect_answers: [
+        "Tokyo Ghoul",
+        "Code Geass",
+        "Psycho-Pass"
+      ]
+    },
+    {
+      question: "What is the name of the school in 'My Hero Academia' where students train to become heroes?",
+      correct_answer: "U.A. High School",
+      incorrect_answers: [
+        "Shiketsu High School",
+        "Ketsubutsu Academy",
+        "Hosu Academy"
+      ]
+    },
+    {
+      question: "In the anime 'Dragon Ball Z', what is the name of Goku's original Saiyan name?",
+      correct_answer: "Kakarot",
+      incorrect_answers: [
+        "Raditz",
+        "Bardock",
+        "Vegeta"
+      ]
+    }
+  ];
   
 }
 

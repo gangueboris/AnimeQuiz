@@ -21,8 +21,7 @@ and select it in the DOM.
 it elements value (for example with object), it will to lead to an error.
 To fix the issue, we have to use interface, help us to specify the type.
 
-/*========Function in template
- ==> OnInit() =========*/
+/*========Function in template ==> OnInit() =========*/
 - DO not put, function inside template, instead, put static array.
 So we can solve this issue initializing an array onInit()
 
@@ -34,10 +33,11 @@ So we can solve this issue initializing an array onInit()
 - Work on services: group common method in each component and put them in a service
 - Design the database
 ????
-- How really works formControls ??
-- What does form__Name ??
-- How to initialize inputs when using forms ?
+
+** About service **
+- Create interface to received quiz form
+- 
+
 
 FormGroup: static, FormArray: Dynamic
-
 FormArrayName, FormGroupName are very important, il missing, it will not work.

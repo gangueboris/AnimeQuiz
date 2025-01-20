@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserResponse } from '../home/types-quiz';
-
+import { UserResponse } from '../../types-quiz';
 
 @Component({
   selector: 'app-quiz',
@@ -250,8 +249,7 @@ export class QuizComponent implements OnInit{
         "Sasuke Uchiha",
         "Kakashi Hatake",
         "Sakura Haruno"
-      ],
-      isVisible: false
+      ]
     },
     {
       question: "In 'Attack on Titan', what is the name of the Titan form used by Eren Yeager?",
@@ -260,8 +258,7 @@ export class QuizComponent implements OnInit{
         "Colossal Titan",
         "Armored Titan",
         "Beast Titan"
-      ],
-      isVisible: false
+      ]
     },
     {
       question: "Which anime features the character Light Yagami and a notebook that can kill?",
@@ -270,8 +267,7 @@ export class QuizComponent implements OnInit{
         "Tokyo Ghoul",
         "Code Geass",
         "Psycho-Pass"
-      ],
-      isVisible: false
+      ]
     },
     {
       question: "What is the name of the school in 'My Hero Academia' where students train to become heroes?",
@@ -280,8 +276,7 @@ export class QuizComponent implements OnInit{
         "Shiketsu High School",
         "Ketsubutsu Academy",
         "Hosu Academy"
-      ],
-      isVisible: false
+      ]
     },
     {
       question: "In the anime 'Dragon Ball Z', what is the name of Goku's original Saiyan name?",
@@ -290,8 +285,7 @@ export class QuizComponent implements OnInit{
         "Raditz",
         "Bardock",
         "Vegeta"
-      ],
-      isVisible: false
+      ]
     }
   ];
   
