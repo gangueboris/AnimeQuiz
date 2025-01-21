@@ -41,3 +41,16 @@ So we can solve this issue initializing an array onInit()
 
 FormGroup: static, FormArray: Dynamic
 FormArrayName, FormGroupName are very important, il missing, it will not work.
+
+/*=========================================HOSTING THE PROJECT ON GITHUB =================================*/
+
+1. ng add angular-cli-ghpage
+2. ng build --base-href "https://github.com/gangueboris/AnimeQuiz"
+3. On github, move to the repository of the project ==> settings ==> Pages and change Branch to master
+4. Publish the project: npx angular-cli-ghpages --dir=dist/anime-quiz/browser
+5. On github, change the master to gh-Pages
+6. Publish again : (run the line 4)
+
+/*== After change on the project and want to publish ===*/
+1. ng build --base-href "https://github.com/gangueboris/AnimeQuiz"
+2. npx angular-cli-ghpages --dir=dist/anime-quiz/browser
