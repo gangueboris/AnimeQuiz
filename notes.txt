@@ -44,7 +44,7 @@ FormArrayName, FormGroupName are very important, il missing, it will not work.
 
 /*=========================================HOSTING THE PROJECT ON GITHUB =================================*/
 
-1. ng add angular-cli-ghpage
+1. ng add angular-cli-ghpages | npm install -g angular-cli-ghpages
 2. ng build --base-href "https://github.com/gangueboris/AnimeQuiz"
 3. On github, move to the repository of the project ==> settings ==> Pages and change Branch to master
 4. Publish the project: npx angular-cli-ghpages --dir=dist/anime-quiz/browser
@@ -53,4 +53,6 @@ FormArrayName, FormGroupName are very important, il missing, it will not work.
 
 /*== After change on the project and want to publish ===*/
 1. ng build --base-href "https://github.com/gangueboris/AnimeQuiz"
-2. npx angular-cli-ghpages --dir=dist/anime-quiz/browser
+2. npx angular-cli-ghpages --dir=dist/anime-quiz/browser | ng deploy --base-href "/AnimeQuiz/"
+
+command to change branch: git checkout master   | git checkout gh-pages
