@@ -42,17 +42,29 @@ So we can solve this issue initializing an array onInit()
 FormGroup: static, FormArray: Dynamic
 FormArrayName, FormGroupName are very important, il missing, it will not work.
 
+
+
+
 /*=========================================HOSTING THE PROJECT ON GITHUB =================================*/
+0. I suppose I have already create a repository on github for AnimeQuiz, you have already install npm.
+Before, make sure the project is push on github
 
-1. ng add angular-cli-ghpages | npm install -g angular-cli-ghpages
-2. ng build --base-href "https://github.com/gangueboris/AnimeQuiz"
-3. On github, move to the repository of the project ==> settings ==> Pages and change Branch to master
-4. Publish the project: npx angular-cli-ghpages --dir=dist/anime-quiz/browser
-5. On github, change the master to gh-Pages
-6. Publish again : (run the line 4)
+1. Install the angular-cli-ghpages packages: it will create a new branch (gh-pages for deployement)
+command: ```ng add angular-cli-ghpages```
 
-/*== After change on the project and want to publish ===*/
-1. ng build --base-href "https://github.com/gangueboris/AnimeQuiz"
-2. npx angular-cli-ghpages --dir=dist/anime-quiz/browser | ng deploy --base-href "/AnimeQuiz/"
+2. Build the project: 
+repository Url: => https://{{profile Name}}.github.io/{{repo Name}}
+command: ```ng build --base-href "https://gangueboris.github.io/AnimeQuiz/"
+```
 
-command to change branch: git checkout master   | git checkout gh-pages
+2.1. On github, move to the repository of the project ==> settings ==> Pages and change Branch to master
+
+3. Publish the project: npx angular-cli-ghpages --dir= {{relative_path_of_browser}}
+Command: ```npx angular-cli-ghpages --dir=dist/anime-quiz/browser```
+
+3.1. On github, move to the repository of the project ==> settings ==> Pages and change Branch to gh-pages
+3.2. Publish again: ```npx angular-cli-ghpages --dir=dist/anime-quiz/browser```
+
+/*================= MAINTAIN AN UPDATE ==================*/
+1. Build the project 
+2. Publish
