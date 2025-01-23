@@ -1,7 +1,3 @@
-p{
-    color: var(--text-color);
-}
-
 section {
     position: relative;
     background: var(--secondary-color);
@@ -10,16 +6,15 @@ section {
     width: 100vw;
 }
 
-.quiz__container{
-    width: 100%;
-}
+
 /*========================= QUIZ HEADER ============================*/
 .quiz__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 2rem 0;
-    margin-bottom: 3rem;
+    margin-bottom: 8rem;
+  
 }
 
 .logo{
@@ -27,10 +22,12 @@ section {
 }
 
 
+/*========================= QUIZ QUESTIONS ============================*/
 .questions__container {
     display: flex;
     justify-content: center;
 }
+
 .questions__container div{
    
     width: var(--form-width);
@@ -180,4 +177,17 @@ section {
 }
 .fa-circle-xmark {
     color: var(--error-color);
+}
+
+/* =============================================== MEDIA QUERIES (SMALL DEVICES) ======================================================= */
+@media screen and (max-width: 600px) {
+    /*========================= QUIZ QUESTIONS ============================*/
+    .questions__container div{
+        width: 100%;
+    }
+
+    /*=========================== COMPLETE QUIZ ==========================*/
+    .complete-quiz__container {
+        width: 320px;
+    }
 }

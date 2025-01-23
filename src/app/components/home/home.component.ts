@@ -11,7 +11,7 @@ import { AddQuestionComponent } from "../add-question/add-question.component";
         <div class="nav__container container">
             <a href=""><h1 class="logo">AnimeQuiz</h1></a>
             <div class="profile__container">
-               <p>Welcome AnimeQuizer <span> {{ userXP }} XP</span></p>
+               <p>AnimeQuizer <span> {{ userXP }} XP</span></p>
             </div>
         </div>
     </nav>

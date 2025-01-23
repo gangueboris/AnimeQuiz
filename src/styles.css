@@ -16,7 +16,9 @@
     --black-color: #000;
 
     --form-width: 600px;
-    --lg-screen: 1400px;
+    --lg-screen: 74%;       /*1400px;*/
+    --md-screen: 88%;
+    
     
     --border-raduis-input: 5px;
 
@@ -25,6 +27,7 @@
     --padding-input: 10px 35px 10px 10px; 
 }
 
+/*============================= GENERAL ================================*/
 *{
     margin: 0;
     padding: 0;
@@ -220,3 +223,32 @@ button{
   input:hover{
     border: 2px solid var(--primary-color);
   }
+
+/* =============================================== MEDIA QUERIES (MEDIUM DEVICES) ======================================================= */
+@media screen and (max-width: 1200px) {
+    /*============================= GENERAL ================================*/
+    .container {
+      width: var(--md-screen);
+    }
+
+}
+
+
+/* =============================================== MEDIA QUERIES (SMALL DEVICES) ======================================================= */
+@media screen and (max-width: 600px) {
+  /*=================== GENERAL ====================*/
+  h1{
+    font-size: 1.5rem;
+  }
+
+  p{ 
+    font-size: 1rem;
+  }
+
+  /*=================== ADD & EDIT QUESTIONS ====================*/
+  .quiz-container {
+    width: auto;
+
+  }
+
+}

@@ -12,7 +12,6 @@ body.no-scroll {
     width: 100wh;
     background: var(--background-color);
     padding: 4rem 0;
-    
   }
 
 
@@ -137,4 +136,12 @@ span {
     opacity: 0;
     visibility: hidden;
 
+}
+
+/* =============================================== MEDIA QUERIES (SMALL DEVICES) ======================================================= */
+@media screen and (max-width: 600px) {
+    /*=========================== COMPLETE QUIZ ==========================*/
+    .complete-quiz__container {
+        width: 320px;
+    }
 }
