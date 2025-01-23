@@ -29,6 +29,11 @@ So we can solve this issue initializing an array onInit()
 - Work on edit quiz, make it functionnal (Done)
 - Make more reseach one ReactiveForm, FormArray, FormGroup, FormControl (Done)
 - There is a big problem on edit-question page, related to my understanding of Angular Reactive forms (Done)
+--- RESPONSIVE ---
+- hide the quiz-questions when complete quiz pop-pop
+- Solve the card display issue on home page
+- Add delete option on add-question component
+- Analyse and take note of all issues 
 
 - Work on services: group common method in each component and put them in a service
 - Design the database

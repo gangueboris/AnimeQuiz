@@ -9,7 +9,7 @@ import { AddQuestionComponent } from "../add-question/add-question.component";
   <!-- NAVBAR -->
     <nav>
         <div class="nav__container container">
-            <a href=""><h1 class="logo">AnimeQuiz</h1></a>
+            <a (click)="goHome()"><h1 class="logo">AnimeQuiz</h1></a>
             <div class="profile__container">
                <p>AnimeQuizer <span> {{ userXP }} XP</span></p>
             </div>
@@ -51,7 +51,7 @@ import { AddQuestionComponent } from "../add-question/add-question.component";
    <footer>
         <div class="footer__container container">
           <div class="footer__header">
-            <a href=""><h1 class="logo">AnimeQuiz</h1></a>
+            <a (click)="goHome()"><h1 class="logo">AnimeQuiz</h1></a>
           </div>
           <div class="footer__links">
             <ul>
@@ -96,6 +96,10 @@ export class HomeComponent {
     this.isAddQuestionVisible = !this.isAddQuestionVisible;
     // Close options
     this.toggleOptions();
+  }
+
+  goHome(): void {
+    this.router.navigate(['']);
   }
 
   /*=== Close the pop-up if the background is clicked ====*/

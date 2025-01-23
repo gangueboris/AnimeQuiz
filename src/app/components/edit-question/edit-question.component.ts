@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup,FormControl, FormArray, Validators } from '@angular/forms';
-import { flatMap } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-edit-question',
@@ -9,7 +10,7 @@ import { flatMap } from 'rxjs';
   <body [class.no-scroll]="isActiveDelQuestSection">
     <section class="edit-questions-section">
       <div class="quiz__header">
-        <a href="">
+        <a (click)="goHome()">
           <h1 class="logo">AnimeQuiz
           <span><i class="fa-regular fa-pen-to-square"></i></span>
           </h1>
@@ -90,7 +91,7 @@ export class EditQuestionComponent implements OnInit{
  
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) { 
     this.initCloseChoiceVisible();
   }
 
@@ -221,6 +222,15 @@ export class EditQuestionComponent implements OnInit{
       this.isActiveDelQuestSection = !this.isActiveDelQuestSection;
     }
   }
+  
+
+  // Redirect on the home page
+  goHome(): void {
+    this.router.navigate(['']);
+  }
+
+
+  
   
 
     

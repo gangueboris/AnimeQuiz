@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserResponse } from '../../types-quiz';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quiz',
@@ -10,7 +11,7 @@ import { UserResponse } from '../../types-quiz';
       <div class="quiz__container container">
         <div class="quiz__header">
           <div>
-            <a href=""><h1 class="logo">AnimeQuiz</h1></a>
+            <a><h1 class="logo" (click)="goHome()">AnimeQuiz</h1></a>
             <p class="top-nb-questions">{{ nbQuestions }} questions</p>
           </div>
           <div class="quiz-clock"><i class="fa-solid fa-stopwatch"></i> <span>{{ timeElapsed }}</span></div>
@@ -84,6 +85,10 @@ export class QuizComponent implements OnInit{
     this.nbQuestions = this.dataQuestions.length;
     this.clockLogic();
   }
+  
+  // Contructor
+  constructor (private router: Router) {}
+
   
   // Function to get the next question
   goToNextQuestion():void {
@@ -238,7 +243,10 @@ export class QuizComponent implements OnInit{
     
   }
   
-
+ // Redirect on the home page
+  goHome(): void {
+    this.router.navigate(['']);
+  }
 
 
   dataQuestions = [
