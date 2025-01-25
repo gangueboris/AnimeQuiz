@@ -239,6 +239,13 @@ button{
   }
 
 
+  /*============ COMMENT ============*/
+  .comment {
+    margin-bottom: 1.5rem;
+    color: var(--link-color);
+    font-size: 0.9rem;
+  }
+
 /* =============================================== MEDIA QUERIES (MEDIUM DEVICES) ======================================================= */
 @media screen and (max-width: 1200px) {
     /*============================= GENERAL ================================*/

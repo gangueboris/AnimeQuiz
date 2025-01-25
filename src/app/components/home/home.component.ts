@@ -56,6 +56,7 @@ import { HttpClient } from '@angular/common/http';
           <div class="footer__header">
             <a (click)="goHome()"><h1 class="logo">AnimeQuiz</h1></a>
           </div>
+          <p class="comment">Quick access to the key concepts and elements used in this project</p>
           <div class="footer__links">
             <ul>
                 @for (obj of referenceLinksArray; track obj.name) {
