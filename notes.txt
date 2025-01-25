@@ -16,7 +16,7 @@
 - When I have to modify a specific elements in a loop, I add an unique id to that element
 and select it in the DOM.
 
-/*========Type issues ==> interface =========*/
+/*======== Type issues ==> interface =========*/
 - When I create an array of something, typeScript doesn't know type of it elements. So when I would like to access
 it elements value (for example with object), it will to lead to an error.
 To fix the issue, we have to use interface, help us to specify the type.
@@ -35,7 +35,8 @@ So we can solve this issue initializing an array onInit()
 - Solve the card display issue on home page (Done)
 - Add close option on add-question component (Done)
 - Solve [Add, Edit] double click for display issues
-- Load quiz from api
+- Solve  save issue on add-question (Done)
+- Load quiz from service (Done)
 - Analyse and take note of all issues
 - Resign the project and make it functionnal by this time by request from an api and displaying the information.
 - Work on services: group common method in each component and put them in a service

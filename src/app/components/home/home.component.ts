@@ -32,7 +32,7 @@ import { HttpClient } from '@angular/common/http';
             </div>
               <button class="card__options-btn" (click)="toggleOptions()"><i class="fa-solid fa-ellipsis"></i></button>
 <!-- OPTIONS -->
-              <div class="card__options" [class.visible]="optionsVisible" (click)="onBackgroundClick($event)">
+              <div class="card__options" (click)="onBackgroundClick($event)">
                   <button class="add" (click)="addQuestion()"><i class="fa-solid fa-plus"></i></button>
                   <button class="edit" (click)="editQuestion()"><i class="fa-regular fa-pen-to-square"></i></button>
                   <!--<button class="delete"><i class="fa-solid fa-trash-can"></i></button>-->
@@ -69,17 +69,17 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
-  constructor(private router: Router){}
+  constructor(private router: Router, private quizService: QuizService){}
   // XP for user profile
   userXP = 0;
   nbQuestions = 0;
   successRate = 0;
-  optionsVisible = false;
   isAddQuestionVisible = false;
   dataQuestions: Array<Quiz> = [];
   
   ngOnInit(): void {
-    //this.dataQuestions = this.quizService.getDataQuestions();
+    this.dataQuestions = this.quizService.getDataQuestions();
+    this.nbQuestions = this.dataQuestions.length;
   }
 
 
@@ -93,7 +93,12 @@ export class HomeComponent implements OnInit{
 
   /*=== Toggle Handling ====*/
   toggleOptions(): void {
-    this.optionsVisible = !this.optionsVisible;
+    const cardOptionsElement = document.querySelector('.card__options');
+    if(cardOptionsElement?.classList.contains("visible")) {
+      cardOptionsElement.classList.remove("visible");
+    } else {
+      cardOptionsElement?.classList.add("visible");
+    }
   }
    
   editQuestion(): void {

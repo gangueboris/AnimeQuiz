@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserResponse } from '../../types-quiz';
+import { Quiz, UserResponse } from '../../types-quiz';
 import { Router } from '@angular/router';
+import { QuizService } from '../../services/quiz.service';
 
 @Component({
   selector: 'app-quiz',
@@ -78,16 +79,18 @@ export class QuizComponent implements OnInit{
   timeElapsed: string = '00:00:00';
   startTime!: Date;
   timerInterval: any;
+  dataQuestions: Array<Quiz> = [];
   
   ngOnInit(): void {
     // Initialize the shuffleQuestions when the page is loaded
-    this.startQuiz();
+    this.dataQuestions = this.quizService.getDataQuestions();
     this.nbQuestions = this.dataQuestions.length;
+    this.startQuiz();
     this.clockLogic();
   }
   
   // Contructor
-  constructor (private router: Router) {}
+  constructor (private router: Router, private quizService: QuizService) {}
 
   // Function to get the next question
   goToNextQuestion():void {
@@ -266,56 +269,6 @@ export class QuizComponent implements OnInit{
     }
 
   }
-
-
-  dataQuestions = [
-    {
-      question: "What is the name of the main protagonist in the anime What is the name of the main protagonist in the anime 'Naruto'?",
-      correct_answer: "Naruto Uzumaki",
-      incorrect_answers: [
-        "Sasuke Uchiha",
-        "Kakashi Hatake",
-        "Sakura Haruno"
-      ]
-    },
-    {
-      question: "In 'Attack on Titan', what is the name of the Titan form used by Eren Yeager?",
-      correct_answer: "Attack Titan",
-      incorrect_answers: [
-        "Colossal Titan",
-        "Armored Titan",
-        "Beast Titan"
-      ]
-    },
-    {
-      question: "Which anime features the character Light Yagami and a notebook that can kill?",
-      correct_answer: "Death Note",
-      incorrect_answers: [
-        "Tokyo Ghoul",
-        "Code Geass",
-        "Psycho-Pass"
-      ]
-    },
-    {
-      question: "What is the name of the school in 'My Hero Academia' where students train to become heroes?",
-      correct_answer: "U.A. High School",
-      incorrect_answers: [
-        "Shiketsu High School",
-        "Ketsubutsu Academy",
-        "Hosu Academy"
-      ]
-    },
-    {
-      question: "In the anime 'Dragon Ball Z', what is the name of Goku's original Saiyan name?",
-      correct_answer: "Kakarot",
-      incorrect_answers: [
-        "Raditz",
-        "Bardock",
-        "Vegeta"
-      ]
-    }
-  ];
-  
 
 }
 

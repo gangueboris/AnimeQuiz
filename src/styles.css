@@ -262,7 +262,7 @@ button{
 
   /*=================== ADD & EDIT QUESTIONS ====================*/
   .quiz-container {
-    width: auto;
+    width: 320px;
 
   }
 
