@@ -169,6 +169,19 @@ button{
     border-radius: 5px;
     font-size: 14px;
   }
+
+  .close-btn {
+    color: var(--error-color);
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.close-btn.visible {
+    opacity: 0;
+    visibility: hidden;
+
+}
+
   
   .add-choice-btn, .form-submit-btn {
     display: block;
@@ -224,6 +237,7 @@ button{
   input:hover{
     border: 2px solid var(--primary-color);
   }
+
 
 /* =============================================== MEDIA QUERIES (MEDIUM DEVICES) ======================================================= */
 @media screen and (max-width: 1200px) {

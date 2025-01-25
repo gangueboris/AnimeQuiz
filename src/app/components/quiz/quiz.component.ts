@@ -89,15 +89,13 @@ export class QuizComponent implements OnInit{
   // Contructor
   constructor (private router: Router) {}
 
-  
   // Function to get the next question
   goToNextQuestion():void {
-
      // Get the choosen answer, add it to the response array and the reset the active class
      let userChoice = '';
      const questionElements = document.getElementsByClassName('question');
-     for(let i = 0; i < questionElements.length; ++i){
-       if(questionElements[i].classList.contains('active')) {
+     for (let i = 0; i < questionElements.length; ++i){
+       if (questionElements[i].classList.contains('active')) {
          userChoice = questionElements[i].textContent?.trim() ?? ''; // Use textContent and ensure it is not null;
          break;
        }
@@ -192,6 +190,13 @@ export class QuizComponent implements OnInit{
     }, 1000);
 
     this.clockLogic();
+
+    // Show the quiz-questions before
+    const questionsElement = document.querySelector(".questions__container");
+    if(questionsElement?.classList.contains("visible")) {
+       questionsElement?.classList.remove("visible");
+    }
+
   }
 
   // Clock functions
@@ -215,9 +220,13 @@ export class QuizComponent implements OnInit{
 
   // Function to display the correct emoji based on user's result
   emojiResultLogic(): void {
+    // Hide the quiz-questions before
+    const questionsElement = document.querySelector(".questions__container");
+     this.showHideElement(questionsElement);   
+
     const score = (this.successAnswers / this.nbQuestions) * 100;
    
-    if(score >= 0 && score < 50){
+    if(score >= 0 && score < 50) {
       this.emoji = "confused-emoji.png";
     }else if(score >= 50 && score < 75) {
       this.emoji = "happy-emoji.png"; 
@@ -233,19 +242,29 @@ export class QuizComponent implements OnInit{
     const topNbQuestions = document.querySelector('.top-nb-questions');
 
 
-     if(clock?.classList.contains('visible')) {
+    if(clock?.classList.contains('visible')) {
       clock?.classList.remove('visible');
       topNbQuestions?.classList.remove('visible');
-     }else {
+      }else {
       clock?.classList.add('visible');
       topNbQuestions?.classList.add('visible');
-     }
+    }
     
   }
   
  // Redirect on the home page
   goHome(): void {
     this.router.navigate(['']);
+  }
+
+  // function to show and Hide an element
+  showHideElement(element: any): void {
+    if (element?.classList.contains("visible")) {
+      element.classList.remove("visible");
+    } else {
+      element?.classList.add("visible"); 
+    }
+
   }
 
 

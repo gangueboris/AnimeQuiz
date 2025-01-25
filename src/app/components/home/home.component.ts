@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { AddQuestionComponent } from "../add-question/add-question.component";
+import { QuizService } from '../../services/quiz.service';
+import { Quiz } from '../../types-quiz';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   imports: [NgOptimizedImage, AddQuestionComponent],
   template: `
   <!-- NAVBAR -->
-    <nav>
+    <nav class="scrolled">
         <div class="nav__container container">
             <a (click)="goHome()"><h1 class="logo">AnimeQuiz</h1></a>
             <div class="profile__container">
@@ -20,7 +23,7 @@ import { AddQuestionComponent } from "../add-question/add-question.component";
   <app-add-question [addQuestionVisible]="isAddQuestionVisible"/>
 
 <!-- HOME -->
-    <section>
+    <section class="home__section">
       <div class="home__container container">
         <div class="card__container">
           <div class="card__header">
@@ -65,7 +68,7 @@ import { AddQuestionComponent } from "../add-question/add-question.component";
   `,
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   constructor(private router: Router){}
   // XP for user profile
   userXP = 0;
@@ -73,6 +76,11 @@ export class HomeComponent {
   successRate = 0;
   optionsVisible = false;
   isAddQuestionVisible = false;
+  dataQuestions: Array<Quiz> = [];
+  
+  ngOnInit(): void {
+    //this.dataQuestions = this.quizService.getDataQuestions();
+  }
 
 
   /*=== Redirecte functions ====*/

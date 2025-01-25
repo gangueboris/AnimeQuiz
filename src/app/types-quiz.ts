@@ -6,7 +6,7 @@ export interface UserResponse {
 
 // Quiz data
 export interface Quiz {
-    questions: string;
+    question: string;
     correct_answer: string;
     incorrect_answers: Array<string>;
 }

@@ -23,6 +23,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, FormArray, Va
           <div class="choice-item">
             <span class="choice-label">{{ choicesLetters[i] }}:</span>
             <input type="text" placeholder="Add Choice {{ i + 1 }}" class="choice-input" [formControlName]="i"/>
+            <i class="fa-solid fa-xmark close-btn" (click)="removeChoice(i)" [class.visible]="closeChoiceVisible"></i>
           </div>
         }
         <button type="button" class="add-choice-btn" (click)="addNewChoice()" [disabled]="disabledAddChoice" [class.active-diseable]="disabledAddChoice">Add a New Choice</button>
@@ -45,6 +46,7 @@ export class AddQuestionComponent {
   choicesLetters = ['A', 'B', 'C', 'D']; 
   @Input() addQuestionVisible = true;
   disabledAddChoice = false;
+  closeChoiceVisible = false;
 
   quizForm: FormGroup;
 
@@ -69,6 +71,10 @@ export class AddQuestionComponent {
 
   // Add a new choice
   addNewChoice(): void {
+    // logic to show close btn when add new choies and nbChoices > 2
+    if(this.choices.length >= 2) {
+      this.closeChoiceVisible = false;
+    }
     if (this.choices.length < this.choicesLetters.length) {
       this.choices.push(this.createChoice());
     } else {
@@ -111,7 +117,19 @@ export class AddQuestionComponent {
     }
   }
 
+
+  // Remove choice
+  removeChoice(optionIndex: number): void {
+    this.choices.removeAt(optionIndex);
+    if(this.choices.length == 2) {
+      this.closeChoiceVisible = true;
+    }
+    // disable = true when I remove choice
+    this.disabledAddChoice = false;
+  }
 }
+
+
 
 /*
 - Add notification, confirm the form submission

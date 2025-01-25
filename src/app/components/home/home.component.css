@@ -5,7 +5,7 @@ nav{
     z-index: 10;
     height: 6rem;
     width: 100vw;
-   background: var(--secondary-color);
+    background: var(--secondary-color);
 }
 
 .nav__container{
@@ -20,10 +20,13 @@ nav{
     color: var(--primary-color);
 
 }
+.scrolled {
+    backdrop-filter: blur(10px);
+}
 
 
 /*======================- HOME -==========================*/
-section{
+.home__section{
     background: var(--background-color);
     height: 100vh;
 }
@@ -31,7 +34,6 @@ section{
 .home__container{
    height: 100%;
    padding-bottom: 5rem;
-  
    display: flex;
    justify-content: center;
    align-items: center;
@@ -145,6 +147,7 @@ footer{
     bottom: 0;
     z-index: 10;
     background: var(--secondary-color);
+    
 }
 
 .footer__container{
@@ -152,7 +155,7 @@ footer{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4rem;
+    padding-bottom: 4rem;
 }
 .footer__header{
     margin: 1rem 0;
@@ -170,10 +173,47 @@ footer{
 }
 
 /* =============================================== MEDIA QUERIES (MEDIUM DEVICES) ======================================================= */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1024px) {
+    /*======================- NAVBAR -==========================*/
+    nav {
+        background: rgba(19, 21, 26, 0.7); /* Darker background */
+    }
+    /*======================- HOME -==========================*/
+    .home__container {
+        padding-top: 8rem;
+        
+    }
     /*======================- FOOTER -==========================*/
     footer{
-        width: 100vw;
+        position: relative;
+    }
+
+    .footer__container{
+        padding-bottom: 2rem;
+    }
+
+     
+}
+
+
+/* =============================================== MEDIA QUERIES (MOBILE DEVICES) ======================================================= */
+@media screen and (max-width: 600px) {
+    /*======================- NAVBAR -==========================*/
+    nav {
+        background: rgba(19, 21, 26, 0.7); /* Darker background */
+    }
+    /*======================- HOME -==========================*/
+    .home__container {
+        padding: 0;
+        
+    }
+    /*======================- FOOTER -==========================*/
+    footer{
+        position: relative;
+    }
+
+    .footer__container{
+        padding-bottom: 2rem;
     }
 
      
