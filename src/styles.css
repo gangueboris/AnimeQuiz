@@ -237,8 +237,7 @@ button{
   input:hover{
     border: 2px solid var(--primary-color);
   }
-
-
+ 
   /*============ COMMENT ============*/
   .comment {
     margin-bottom: 1.5rem;

@@ -91,19 +91,24 @@ export class QuizComponent implements OnInit{
   
   // Contructor
   constructor (private router: Router, private quizService: QuizService) {}
-
+  
+  // Function to get clicked value (the user choice)
+  getUserChoice(): string {
+    // Get the choosen answer, add it to the response array and the reset the active class
+    let userChoice = '';
+    const questionElements = document.getElementsByClassName('question');
+    for (let i = 0; i < questionElements.length; ++i){
+      if (questionElements[i].classList.contains('active')) {
+        userChoice = questionElements[i].textContent?.trim() ?? ''; // Use textContent and ensure it is not null;
+        break;
+      }
+    }
+    return userChoice.split(': ')[1];
+  }
   // Function to get the next question
   goToNextQuestion():void {
-     // Get the choosen answer, add it to the response array and the reset the active class
-     let userChoice = '';
-     const questionElements = document.getElementsByClassName('question');
-     for (let i = 0; i < questionElements.length; ++i){
-       if (questionElements[i].classList.contains('active')) {
-         userChoice = questionElements[i].textContent?.trim() ?? ''; // Use textContent and ensure it is not null;
-         break;
-       }
-     }
-     this.userResponses.push({'user_response': userChoice.split(': ')[1] ?? ""});
+    // Add the user choice in the userResponses list 
+     this.userResponses.push({'user_response': this.getUserChoice() ?? ""});
 
     // Update the nextIndex
     if(this.nextIndex < this.dataQuestions.length - 1) {
@@ -133,18 +138,57 @@ export class QuizComponent implements OnInit{
       if(questionElements[i].classList.contains('active')) {
         questionElements[i].classList.remove('active');
       }
+      if(questionElements[i].classList.contains('success-color')) {
+        questionElements[i].classList.remove('success-color');
+      }
+      if(questionElements[i].classList.contains('error-color')) {
+        questionElements[i].classList.remove('error-color');
+      }
+      if(questionElements[i].classList.contains('diseabled')) {
+        questionElements[i].classList.remove('diseabled');
+      }
     }
   }
+  
+  // Function to disabled cursor effects on all questions
+  diseabledQuestions(): void {
+    const questionElements = document.getElementsByClassName('question');
+    for(let i = 0; i < questionElements.length; ++i) {
+      questionElements[i].classList.add('diseabled');
+    }
 
+  }
   // Function to active the user choice
   selectedQuestion(index: number): void {
-    // Get all elements with the class question and remove the active 
-    this.resetSelectedQuestion();
+      // Get all elements with the class question and remove the active 
+      this.resetSelectedQuestion();
 
-    // Get element with the class 'q' + index
-    const questionElement = document.getElementsByClassName('q' + index);
-    questionElement[0].classList.add('active');
-  
+      // Get element with the class 'q' + index
+      const questionElement = document.getElementsByClassName('q' + index);
+      questionElement[0].classList.add('active');
+      // Get user choice and the corresponding response
+      const userChoice = this.getUserChoice();
+      const correctAnswer = this.dataQuestions.find((quiz) => quiz.incorrect_answers.find((falseAnswer) => falseAnswer === userChoice))?.correct_answer;
+    
+      // Handle to show color   
+      if(!correctAnswer) { // Means the answers not found in the incorrect_answers
+        questionElement[0].classList.replace('active', 'success-color');
+      } else {
+        questionElement[0].classList.replace('active', 'error-color');
+        
+        // Find the correct answer to show
+        const questionsElements = document.querySelectorAll('.question');
+        for(let i = 0; i < questionsElements.length; ++i) {
+          const content = questionsElements[i].textContent?.split(': ')[1];
+          if(content === correctAnswer) {
+            questionsElements[i].classList.add('success-color');    
+            break;
+          }
+        }
+      }
+      
+       // Diseable the click and the hover
+       this.diseabledQuestions();
   }
   
   // Function to calculate the score of the user
@@ -246,11 +290,11 @@ export class QuizComponent implements OnInit{
 
 
     if(clock?.classList.contains('visible')) {
-      clock?.classList.remove('visible');
-      topNbQuestions?.classList.remove('visible');
-      }else {
-      clock?.classList.add('visible');
-      topNbQuestions?.classList.add('visible');
+        clock?.classList.remove('visible');
+        topNbQuestions?.classList.remove('visible');
+    } else {
+        clock?.classList.add('visible');
+        topNbQuestions?.classList.add('visible');
     }
     
   }

@@ -37,7 +37,8 @@ So we can solve this issue initializing an array onInit()
 - Solve [Add, Edit] double click for display issues
 - Solve  save issue on add-question (Done)
 - Load quiz from service (Done)
-- Analyse and take note of all issues
+- With on choice click an a question' option, show the correct answer (Done)
+- Review the quizResult calculations
 - Resign the project and make it functionnal by this time by request from an api and displaying the information.
 - Work on services: group common method in each component and put them in a service
 - Design the database

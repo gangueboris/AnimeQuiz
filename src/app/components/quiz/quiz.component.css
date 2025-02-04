@@ -79,6 +79,17 @@ section {
 .question.active {
     background: var(--black-color);
 }
+
+.success-color {
+    background:#28a745;
+  }
+ 
+.error-color {
+    background:#dc3545;
+}
+.diseabled {
+    pointer-events: none;
+}
 .next-question{
     position: absolute;
     right: 0;
