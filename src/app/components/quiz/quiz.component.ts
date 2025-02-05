@@ -115,8 +115,8 @@ export class QuizComponent implements OnInit{
       this.nextIndex = this.nextIndex + 1;
       this.shuffledQuestions = this.getShuffledQuestions(this.nextIndex); // Update the shuffle array
     }else{
-      // Compute user response result
-      this.computeScore();
+      // We reache the end so, update the emoji
+      this.emojiResultLogic();
       
       // Show the result card by activating it visibility
       this.quizResult = false;
@@ -171,8 +171,11 @@ export class QuizComponent implements OnInit{
       const correctAnswer = this.dataQuestions.find((quiz) => quiz.incorrect_answers.find((falseAnswer) => falseAnswer === userChoice))?.correct_answer;
     
       // Handle to show color   
-      if(!correctAnswer) { // Means the answers not found in the incorrect_answers
+      if(!correctAnswer) { // Means the answers not found in the incorrect_answers so the userChoice is correct
         questionElement[0].classList.replace('active', 'success-color');
+        
+        // Update the correctAnswer tracker
+        this.successAnswers++;
       } else {
         questionElement[0].classList.replace('active', 'error-color');
         
@@ -189,21 +192,6 @@ export class QuizComponent implements OnInit{
       
        // Diseable the click and the hover
        this.diseabledQuestions();
-  }
-  
-  // Function to calculate the score of the user
-  computeScore(): void {
-    for(let i = 0; i < this.userResponses.length; i++) {
-      const userResponse = this.userResponses[i].user_response;
-      const correctAnswer = this.dataQuestions[i].correct_answer;
-    
-      if(userResponse?.trim() === correctAnswer?.trim()) {
-        this.successAnswers++;
-      }
-    }
-
-    // update the emoji
-    this.emojiResultLogic();
   }
 
   // Logic to get shuffled questions(correct + incorrects)

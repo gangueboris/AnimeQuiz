@@ -38,7 +38,7 @@ So we can solve this issue initializing an array onInit()
 - Solve  save issue on add-question (Done)
 - Load quiz from service (Done)
 - With on choice click an a question' option, show the correct answer (Done)
-- Review the quizResult calculations
+- Review the quizResult calculations (Done)
 - Resign the project and make it functionnal by this time by request from an api and displaying the information.
 - Work on services: group common method in each component and put them in a service
 - Design the database
@@ -63,8 +63,7 @@ command: ```ng add angular-cli-ghpages```
 
 2. Build the project: 
 repository Url: => https://{{profile Name}}.github.io/{{repo Name}}
-command: ```ng build --base-href "https://gangueboris.github.io/AnimeQuiz/"
-```
+command: ```ng build --base-href "https://gangueboris.github.io/AnimeQuiz/"```
 
 2.1. On github, move to the repository of the project ==> settings ==> Pages and change Branch to master
 
