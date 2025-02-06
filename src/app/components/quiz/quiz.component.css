@@ -197,6 +197,11 @@ section {
         width: 100%;
     }
 
+    .question:hover {
+        background: inherit; /* Reset to default background */
+        transition: none; /* Remove transition effect */
+    }
+       
     /*=========================== COMPLETE QUIZ ==========================*/
     .complete-quiz__container {
         width: 320px;

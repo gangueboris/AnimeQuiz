@@ -173,7 +173,7 @@ export class QuizComponent implements OnInit{
       // Handle to show color   
       if(!correctAnswer) { // Means the answers not found in the incorrect_answers so the userChoice is correct
         questionElement[0].classList.replace('active', 'success-color');
-        
+
         // Update the correctAnswer tracker
         this.successAnswers++;
       } else {
