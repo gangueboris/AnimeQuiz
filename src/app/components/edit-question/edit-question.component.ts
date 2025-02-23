@@ -21,7 +21,7 @@ import { QuizService } from '../../services/quiz.service';
 
       <div class="edit-question__container container">
         @for(data of dataQuestions; track data; let i = $index) {
-          <form [id]="'form-' + i" class="quiz-container" [formGroup]="quizForms[i]" (ngSubmit)="onUpdateSubmit(i)">
+          <form [id]="'form-' + i" class="quiz-container" [formGroup]="quizForms[i]" (ngSubmit)="onUpdateSubmit(i, data.id)">
             <div class="question-section">
               <label for="question" class="question-label">Question {{ i + 1 }}
                 @if( isFormVisible(i)) { 
@@ -33,7 +33,7 @@ import { QuizService } from '../../services/quiz.service';
               <input type="text" id="question" placeholder="Your Question Here..." class="question-input"  formControlName="question"/>
             </div>
             
-              @if( isFormVisible(i)) {
+              @if(isFormVisible(i)) {
                 <div formArrayName="choices" class="choices-section">
                   <p class="choices-label">Choices</p>
                   @for(choice of choices(i).controls; track choice; let j = $index) {
@@ -49,15 +49,15 @@ import { QuizService } from '../../services/quiz.service';
                 <!-- Correct answers -->
                 <div class="correct-answer-section">
                   <label for="correct-answer" class="answer-label">Correct Answer</label>
-                  <input type="text" id="correct-answer" placeholder="Add the correct answer..." class="answer-input" [value]="data.correct_answer" formControlName="correctAnswer"/>
+                  <input type="text" id="correct-answer" placeholder="Add the correct answer..." class="answer-input" [value]="data.correctAnswer" formControlName="correctAnswer"/>
                 </div>
-
+                 
                 <!-- Save button -->
                 <button type="submit" class="form-submit-btn" [disabled]="quizForms[i].invalid" [class.active-diseable]="quizForms[i].invalid">Save</button>
               }
             
             @if(!isFormVisible(i)) {
-              <i class="fa-solid fa-trash-can delete-icon" (click)="toggleDeleteQuestion(i)"></i>
+              <i class="fa-solid fa-trash-can delete-icon" (click)="toggleDeleteQuestion(i, data.id)"></i>
             }
           </form>
         }
@@ -74,7 +74,7 @@ import { QuizService } from '../../services/quiz.service';
           </div>
           <div class="delete-questions-btn-container">
             <button class="cancel-btn btn" (click)="cancelDelete()">Cancel</button>
-            <button class="delete-btn btn">Delete</button>
+            <button class="delete-btn btn" (click)="deleteQuestion(quizId)">Delete</button>
           </div>
        </div>
     </section>
@@ -90,6 +90,7 @@ export class EditQuestionComponent implements OnInit{
   closeChoiceVisible: boolean[] = [];
   quizForms: FormGroup[] = [];
   dataQuestions: Array<Quiz> = [];
+  quizId: number = 0;
 
  
 
@@ -99,8 +100,23 @@ export class EditQuestionComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.dataQuestions = this.quizService.getDataQuestions();
-    this.initializeForms();
+    // Load the data From the backEnd
+    this.quizService.getAllQuiz().subscribe({
+      next: (data) => {
+        //console.log('Data received:', data); // Log the data here
+        this.dataQuestions = data;
+
+      },
+      error: (err) => {
+        console.error('Error fetching data:', err); // Log any errors
+      },
+      complete: () => {
+         // Initialize the shuffleQuestions when the page is loaded
+         this.initializeForms();
+      },
+    });
+
+    
   }
 
   // Initialize form groups for all questions
@@ -109,9 +125,9 @@ export class EditQuestionComponent implements OnInit{
       const questionForm = this.fb.group({
         question: [data.question, Validators.required],
         choices: this.fb.array(
-          data.incorrect_answers.map((answer) => this.fb.control(answer, Validators.required)) // issue
+          data.incorrectAnswers.map((answer) => this.fb.control(answer, Validators.required)) // issue
         ),
-        correctAnswer: [data.correct_answer, Validators.required]
+        correctAnswer: [data.correctAnswer, Validators.required]
       });
       this.quizForms.push(questionForm);
     });
@@ -129,21 +145,38 @@ export class EditQuestionComponent implements OnInit{
 
   // Update specific choice value dynamically
   onChoiceInput(questionIndex: number, choiceIndex: number, value: string): void {
-    this.dataQuestions[questionIndex].incorrect_answers[choiceIndex] = value;
+    this.dataQuestions[questionIndex].incorrectAnswers[choiceIndex] = value;
   }
 
   // Update correct answer value dynamically
   onCorrectAnswerInput(index: number, value: string): void {
-    this.dataQuestions[index].correct_answer = value;
+    this.dataQuestions[index].correctAnswer = value;
   }
 
-  // Handle form submission
-  onUpdateSubmit(index: number): void {
+  // Handle form submission by Updating the quiz
+  onUpdateSubmit(index: number, idQuiz:number | undefined): void {
     if (this.quizForms[index].valid) {
       // Toggle the icon to let know that the file is submitted
       this.toggleVisibleIcon(index);
-      console.log('Form Submitted:', this.quizForms[index].value, index);
+       
+      // Get the form content
+      const submitted =  this.quizForms[index].value;
+      const updateQuiz: Quiz = {
+        id: idQuiz,
+        question:  submitted["question"],
+        correctAnswer: submitted["correctAnswer"],
+        incorrectAnswers: submitted["choices"]
+      };
+     
       // Insert logic to save to the database
+      this.quizService.updateQuiz(updateQuiz).subscribe({
+        error: (err) => {
+          console.log("Updating error", err);
+        },
+        complete () {
+            console.log("Update SUCCESS !!");
+        }
+      });
     } else {
       console.error('Form is invalid !');
     }
@@ -164,19 +197,23 @@ export class EditQuestionComponent implements OnInit{
     const formElement = document.getElementById('form-'+ formId);
     if(formElement?.classList.contains('isFormVisible')) {
       return true;
-    }else {
+    } else {
       return false;
     }
   
   }
 
-  // Delete question
-  toggleDeleteQuestion(index: number): void {
+  // Toggle Delete question
+  toggleDeleteQuestion(index: number, idQuiz: number | undefined): void {
     this.isActiveDelQuestSection = true;
     this.delQuestionNumber.set(index + 1);
-    //this.dataQuestions.splice(index, 1);
-    //this.quizForms.splice(index, 1);
+
+    // Set the quizId to retrieve it when the deletion is comfirmed
+    if(idQuiz) this.quizId = idQuiz;
+   
   }
+
+  
 
   removeChoice(questionIndex: number, optionIndex: number): void {
     this.choices(questionIndex).removeAt(optionIndex);
@@ -219,8 +256,21 @@ export class EditQuestionComponent implements OnInit{
   /*=================METHODs FOR DELETE POP-UP==================*/
   cancelDelete(): void {
     this.isActiveDelQuestSection = !this.isActiveDelQuestSection;
-  
   }
+
+  // Delete question in the database
+  deleteQuestion(quizId: number): void {
+    this.quizService.deleteQuiz(quizId).subscribe({
+      error: (err) => {
+        console.log("Error message", err);
+      }, 
+      complete: () => {
+        console.log("Success deletion");
+      }
+    });
+    this.cancelDelete();
+  }
+  
 
   // Close the pop-up if the background is clicked
   onBackgroundClick(event: MouseEvent): void {
@@ -252,4 +302,12 @@ export class EditQuestionComponent implements OnInit{
  - Form Validation, for saving
  - Delete logic
 
+ // Problem with delete quiz
+ - I don't know to retrieve the quiz'index for deletion
+
+
+ ===========================================
+ // For updating
+ - I can put in an hidden input the id
+ - Instead of using the Array's id, I can use the ID an iterate into dataQuestion to find the ...
 */

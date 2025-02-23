@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { Quiz } from '../../types-quiz';
+import { QuizService } from '../../services/quiz.service';
 
 @Component({
   selector: 'app-add-question',
@@ -50,7 +52,7 @@ export class AddQuestionComponent {
 
   quizForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private quizService: QuizService) {
     this.quizForm = this.fb.group({
       question: ['', Validators.required],
       choices: this.fb.array([this.createChoice(), this.createChoice()]), // Initialize with 3 choices
@@ -102,7 +104,20 @@ export class AddQuestionComponent {
   // Handle form submission
   onAddSubmit(): void {
     if (this.quizForm.valid) {
-      console.log('Form Submitted:', this.quizForm.value); // insert in the dataBase
+      // Convert and insert in the database
+      const newQuiz: Quiz = {
+        question: this.quizForm.value['question'],
+        correctAnswer: this.quizForm.value['correctAnswer'],
+        incorrectAnswers: this.quizForm.value['choices']
+      };
+
+      this.quizService.addQuiz(newQuiz).subscribe({
+        error: (err) => {
+          console.error('Error adding new quiz question:', err); // Log any errors
+        }
+      });
+     
+
       this.closeAddQuestion();
     } else {
       console.error('Form is invalid!');

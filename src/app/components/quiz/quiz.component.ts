@@ -81,12 +81,25 @@ export class QuizComponent implements OnInit{
   timerInterval: any;
   dataQuestions: Array<Quiz> = [];
   
-  ngOnInit(): void {
-    // Initialize the shuffleQuestions when the page is loaded
-    this.dataQuestions = this.quizService.getDataQuestions();
-    this.nbQuestions = this.dataQuestions.length;
-    this.startQuiz();
-    this.clockLogic();
+  ngOnInit(): void {    
+    this.quizService.getAllQuiz().subscribe({
+      next: (data) => {
+        //console.log('Data received:', data); // Log the data here
+        this.dataQuestions = data;
+
+      },
+      error: (err) => {
+        console.error('Error fetching data:', err); // Log any errors
+      },
+      complete: () => {
+         // Initialize the shuffleQuestions when the page is loaded
+         this.nbQuestions = this.dataQuestions.length;
+         this.startQuiz();
+         this.clockLogic();
+      },
+    });
+
+      
   }
   
   // Contructor
@@ -168,10 +181,10 @@ export class QuizComponent implements OnInit{
       questionElement[0].classList.add('active');
       // Get user choice and the corresponding response
       const userChoice = this.getUserChoice();
-      const correctAnswer = this.dataQuestions.find((quiz) => quiz.incorrect_answers.find((falseAnswer) => falseAnswer === userChoice))?.correct_answer;
+      const correctAnswer = this.dataQuestions.find((quiz) => quiz.incorrectAnswers.find((falseAnswer) => falseAnswer === userChoice))?.correctAnswer;
     
       // Handle to show color   
-      if(!correctAnswer) { // Means the answers not found in the incorrect_answers so the userChoice is correct
+      if(!correctAnswer) { // Means the answers not found in the incorrectAnswers so the userChoice is correct
         questionElement[0].classList.replace('active', 'success-color');
 
         // Update the correctAnswer tracker
@@ -196,8 +209,8 @@ export class QuizComponent implements OnInit{
 
   // Logic to get shuffled questions(correct + incorrects)
   getShuffledQuestions(index: number): Array<string> {
-    let shuffledArray = [...this.dataQuestions[index].incorrect_answers]
-    let correctAnswer = this.dataQuestions[index].correct_answer;
+    let shuffledArray = [...this.dataQuestions[index].incorrectAnswers]
+    let correctAnswer = this.dataQuestions[index].correctAnswer;
     shuffledArray.push(correctAnswer); // add correctAnwer to incorrectArray to shuffle them
     
     // Logic to randomize the array

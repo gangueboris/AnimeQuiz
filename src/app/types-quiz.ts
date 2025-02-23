@@ -6,9 +6,10 @@ export interface UserResponse {
 
 // Quiz data
 export interface Quiz {
+    id?: number;  // Optional because the backend will generate it
     question: string;
-    correct_answer: string;
-    incorrect_answers: Array<string>;
+    correctAnswer: string;
+    incorrectAnswers: Array<string>;
 }
 
   

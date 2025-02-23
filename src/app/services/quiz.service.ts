@@ -8,11 +8,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class QuizService {
   // Local database
-  private dataQuestions: Array<Quiz> = [
+  private apiUrl = "https://animequiz-api.onrender.com";
+  private dataQuestions: Array<Quiz> = [];
+  /* = [
     {
         "question": "What is the name of the pirate crew led by Monkey D. Luffy in 'One Piece'?",
-        "correct_answer": "Straw Hat Pirates",
-        "incorrect_answers": [
+        "correctAnswer": "Straw Hat Pirates",
+        "incorrectAnswers": [
             "Red-Haired Pirates",
             "Heart Pirates",
             "Whitebeard Pirates"
@@ -20,8 +22,8 @@ export class QuizService {
     },
     {
         "question": "In 'Demon Slayer', what is Tanjiro's primary goal?",
-        "correct_answer": "To cure his sister Nezuko",
-        "incorrect_answers": [
+        "correctAnswer": "To cure his sister Nezuko",
+        "incorrectAnswers": [
             "To defeat Muzan Kibutsuji",
             "To become a Hashira",
             "To avenge his family"
@@ -29,8 +31,8 @@ export class QuizService {
     },
     {
         "question": "Which anime features a high school girl named Haruhi Suzumiya and her mysterious brigade?",
-        "correct_answer": "The Melancholy of Haruhi Suzumiya",
-        "incorrect_answers": [
+        "correctAnswer": "The Melancholy of Haruhi Suzumiya",
+        "incorrectAnswers": [
             "Toradora!",
             "Clannad",
             "Lucky Star"
@@ -38,8 +40,8 @@ export class QuizService {
     },
     {
         "question": "In 'Fullmetal Alchemist', what is the ultimate taboo in alchemy?",
-        "correct_answer": "Human transmutation",
-        "incorrect_answers": [
+        "correctAnswer": "Human transmutation",
+        "incorrectAnswers": [
             "Using Philosopher's Stones",
             "Alchemy without a circle",
             "Transforming gold"
@@ -47,8 +49,8 @@ export class QuizService {
     },
     {
         "question": "What is the main weapon of choice for Guts in 'Berserk'?",
-        "correct_answer": "Dragonslayer sword",
-        "incorrect_answers": [
+        "correctAnswer": "Dragonslayer sword",
+        "incorrectAnswers": [
             "Crossbow",
             "Twin daggers",
             "Spear"
@@ -56,8 +58,8 @@ export class QuizService {
     },
     {
         "question": "In 'Sword Art Online', what is the name of the virtual world where players are trapped?",
-        "correct_answer": "Aincrad",
-        "incorrect_answers": [
+        "correctAnswer": "Aincrad",
+        "incorrectAnswers": [
             "Alfheim",
             "Underworld",
             "Gun Gale Online"
@@ -65,8 +67,8 @@ export class QuizService {
     },
     {
         "question": "Who is the teacher of Gon and Killua in 'Hunter x Hunter' during the Greed Island arc?",
-        "correct_answer": "Biscuit Krueger",
-        "incorrect_answers": [
+        "correctAnswer": "Biscuit Krueger",
+        "incorrectAnswers": [
             "Wing",
             "Kite",
             "Knuckle Bine"
@@ -74,8 +76,8 @@ export class QuizService {
     },
     {
         "question": "Which anime features a young boy named Edward Elric seeking the Philosopher's Stone?",
-        "correct_answer": "Fullmetal Alchemist: Brotherhood",
-        "incorrect_answers": [
+        "correctAnswer": "Fullmetal Alchemist: Brotherhood",
+        "incorrectAnswers": [
             "Black Clover",
             "Bleach",
             "Seven Deadly Sins"
@@ -83,8 +85,8 @@ export class QuizService {
     },
     {
         "question": "In 'Fairy Tail', what type of magic does Natsu Dragneel use?",
-        "correct_answer": "Fire Dragon Slayer Magic",
-        "incorrect_answers": [
+        "correctAnswer": "Fire Dragon Slayer Magic",
+        "incorrectAnswers": [
             "Celestial Spirit Magic",
             "Ice-Make Magic",
             "Requip Magic"
@@ -92,8 +94,8 @@ export class QuizService {
     },
     {
         "question": "What is the name of the energy attack famously used by Goku in 'Dragon Ball Z'?",
-        "correct_answer": "Kamehameha",
-        "incorrect_answers": [
+        "correctAnswer": "Kamehameha",
+        "incorrectAnswers": [
             "Final Flash",
             "Spirit Bomb",
             "Galick Gun"
@@ -101,8 +103,8 @@ export class QuizService {
     },
     {
         "question": "In 'Bleach', what is the name of Ichigo's Zanpakuto?",
-        "correct_answer": "Zangetsu",
-        "incorrect_answers": [
+        "correctAnswer": "Zangetsu",
+        "incorrectAnswers": [
             "Benihime",
             "Senbonzakura",
             "Hyōrinmaru"
@@ -110,8 +112,8 @@ export class QuizService {
     },
     {
         "question": "Which anime features a character named Levi Ackerman, known for his exceptional combat skills?",
-        "correct_answer": "Attack on Titan",
-        "incorrect_answers": [
+        "correctAnswer": "Attack on Titan",
+        "incorrectAnswers": [
             "Sword Art Online",
             "Demon Slayer",
             "Tokyo Ghoul"
@@ -119,8 +121,8 @@ export class QuizService {
     },
     {
         "question": "What is the name of the virtual currency used in the anime 'No Game No Life'?",
-        "correct_answer": "Gold coins",
-        "incorrect_answers": [
+        "correctAnswer": "Gold coins",
+        "incorrectAnswers": [
             "Spirit Points",
             "Mana Crystals",
             "Bet Tokens"
@@ -128,8 +130,8 @@ export class QuizService {
     },
     {
         "question": "In 'Tokyo Ghoul', what is the name of the mask maker for the ghouls?",
-        "correct_answer": "Uta",
-        "incorrect_answers": [
+        "correctAnswer": "Uta",
+        "incorrectAnswers": [
             "Kaneki",
             "Touka",
             "Arima"
@@ -137,39 +139,42 @@ export class QuizService {
     },
     {
         "question": "What is the name of the cursed object in 'Jujutsu Kaisen' that Yuji Itadori consumes?",
-        "correct_answer": "Ryomen Sukuna's Finger",
-        "incorrect_answers": [
+        "correctAnswer": "Ryomen Sukuna's Finger",
+        "incorrectAnswers": [
             "Cursed Amulet",
             "Cursed Sword",
             "Cursed Orb"
         ]
     }
-];
-  constructor(/*private http: HttpClient*/) { }
+];*/
+
+  // Constructor
+  constructor(private http: HttpClient) { }
    
   getDataQuestions(): Array<Quiz> {
     return [...this.dataQuestions]; // Return a copy to prevent direct mutation
   }
-  /*
+
+  
   // Function to get quiz from the database
   getAllQuiz(): Observable<Array<Quiz>> { 
-    return this.http.get<Array<Quiz>>("");
+    return this.http.get<Array<Quiz>>(`${this.apiUrl}/quiz`);
   }
 
   // Function to add a quiz in the database
   addQuiz(quiz: Quiz): Observable<Quiz> {
-    return this.http.post<Quiz>("", quiz);
+    return this.http.post<Quiz>(`${this.apiUrl}/quiz`, quiz);
   }
 
   // Function to update a quiz in the database
   updateQuiz(quiz: Quiz): Observable<Quiz> {
-    return this.http.put<Quiz>("", quiz);
+    return this.http.put<Quiz>(`${this.apiUrl}/quiz`, quiz);
   }
 
   // Function to delete a quiz in the database
   deleteQuiz(quizId: number): Observable<void> {
-    return this.http.delete<void>("");
-  }*/
+    return this.http.delete<void>(`${this.apiUrl}/quiz/${quizId}`);
+  }
 
   
   
