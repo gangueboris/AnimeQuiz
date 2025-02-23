@@ -1,6 +1,6 @@
 # AnimeQuiz
 
-Get a look on [AnimeQuiz](https://gangueboris.github.io/AnimeQuiz/) 
+Get a look on [AnimeQuiz](https://gangueboris.github.io/AnimeQuiz-FrontEnd/) 
 
 ## NOTES
 This project is in contruction, I'm at the front-end, non responsive steps.
