@@ -1,6 +1,6 @@
 # AnimeQuiz
 
-Get a look on [AnimeQuiz](https://gangueboris.github.io/AnimeQuiz/) 
+Get a look on [AnimeQuiz](https://gangueboris.github.io/AnimeQuiz-FrontEnd/) 
 
 ## NOTES
 This project is in contruction, I'm at the front-end, non responsive steps.
@@ -42,3 +42,6 @@ This project is designed to help you learn and master Angular by building a feat
 - Forms for input validation and user interactions.
 - Dependency injection and services for handling API requests.
 - Observables and async operations for managing data flow.
+
+## TODO
+- Informed the user that the data is loading from the API in Quiz component & editquestions
