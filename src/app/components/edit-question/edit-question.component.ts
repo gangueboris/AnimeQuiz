@@ -101,7 +101,7 @@ export class EditQuestionComponent implements OnInit{
 
   ngOnInit(): void {
     // Load the data From the backEnd
-    this.quizService.getAllQuiz().subscribe({
+   /* this.quizService.getAllQuiz().subscribe({
       next: (data) => {
         //console.log('Data received:', data); // Log the data here
         this.dataQuestions = data;
@@ -114,8 +114,9 @@ export class EditQuestionComponent implements OnInit{
          // Initialize the shuffleQuestions when the page is loaded
          this.initializeForms();
       },
-    });
-
+    });*/
+    this.dataQuestions = this.quizService.getDataQuestions();
+    this.initializeForms();
     
   }
 

@@ -63,7 +63,7 @@ command: ```ng add angular-cli-ghpages```
 
 2. Build the project: 
 repository Url: => https://{{profile Name}}.github.io/{{repo Name}}
-command: ```ng build --base-href "https://gangueboris.github.io/AnimeQuiz/"```
+command: ```ng build --base-href "https://gangueboris.github.io/AnimeQuiz-FrontEnd/"```
 
 2.1. On github, move to the repository of the project ==> settings ==> Pages and change Branch to master
 

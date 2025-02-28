@@ -9,8 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class QuizService {
   // Local database
   private apiUrl = "https://animequiz-api.onrender.com";
-  private dataQuestions: Array<Quiz> = [];
-  /* = [
+  private dataQuestions: Array<Quiz> = [
     {
         "question": "What is the name of the pirate crew led by Monkey D. Luffy in 'One Piece'?",
         "correctAnswer": "Straw Hat Pirates",
@@ -146,7 +145,7 @@ export class QuizService {
             "Cursed Orb"
         ]
     }
-];*/
+];
 
   // Constructor
   constructor(private http: HttpClient) { }

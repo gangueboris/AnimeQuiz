@@ -82,7 +82,7 @@ export class QuizComponent implements OnInit{
   dataQuestions: Array<Quiz> = [];
   
   ngOnInit(): void {    
-    this.quizService.getAllQuiz().subscribe({
+    /*this.quizService.getAllQuiz().subscribe({
       next: (data) => {
         //console.log('Data received:', data); // Log the data here
         this.dataQuestions = data;
@@ -98,6 +98,11 @@ export class QuizComponent implements OnInit{
          this.clockLogic();
       },
     });
+    */
+    this.dataQuestions = this.quizService.getDataQuestions();
+    this.nbQuestions = this.dataQuestions.length;
+    this.startQuiz();
+    this.clockLogic();
 
       
   }
